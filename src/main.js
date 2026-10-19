@@ -1,4 +1,5 @@
 import "./style.css";
+import "./editorial.css";
 
 document.documentElement.classList.add("js");
 document.querySelector("#year").textContent = new Date().getFullYear();
@@ -195,3 +196,23 @@ function openLinkedPrivacy() {
 }
 window.addEventListener("hashchange", openLinkedPrivacy);
 openLinkedPrivacy();
+
+// Move only the product media, leaving reading and video controls stable.
+const motionQuery = matchMedia('(prefers-reduced-motion: reduce), (max-width: 800px)');
+const layers = [...document.querySelectorAll('[data-parallax]')];
+let motionFrame = 0;
+function updateDepth() {
+  motionFrame = 0;
+  layers.forEach(layer => {
+    if (motionQuery.matches) { layer.style.transform = ''; return; }
+    const section = layer.closest('section');
+    const distance = innerHeight / 2 - (section.getBoundingClientRect().top + section.offsetHeight / 2);
+    const offset = Math.max(-40, Math.min(40, distance * Number(layer.dataset.parallax)));
+    layer.style.transform = `translateY(${offset}px)`;
+  });
+}
+function queueDepth() { if (!motionFrame) motionFrame = requestAnimationFrame(updateDepth); }
+addEventListener('scroll', queueDepth, { passive:true });
+addEventListener('resize', queueDepth);
+motionQuery.addEventListener('change', queueDepth);
+queueDepth();
