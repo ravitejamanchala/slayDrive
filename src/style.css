@@ -2225,3 +2225,20 @@ h2,h3 { font-weight:600; }
 .app-preview-caption a { flex-shrink:0; font-family:"Geist Variable",sans-serif; font-size:12px; color:#086c70; font-weight:650; }
 .app-preview-credit { padding:0 18px 16px; font-size:9px; line-height:1.5; color:#506875; }
 @media(max-width:800px) { .hero-art.app-preview { min-height:0; } .app-preview-bar { padding:15px 12px; font-size:8px; } .app-preview-quality { font-size:7px; } .app-preview-caption { padding:16px 12px 10px; font-size:18px; gap:10px; } .app-preview-caption a { font-size:11px; } .app-preview-credit { padding:0 12px 14px; } }
+
+/* Short portrait demo from the app's mobile driving view. */
+.hero-art.app-preview { width:min(100%,300px); justify-self:center; border-radius:26px; }
+.app-preview-bar { justify-content:center; padding:14px 10px; font-size:9px; }
+.app-preview-image { aspect-ratio:9/16; }
+.app-preview-caption { font-size:16px; padding:14px 12px 10px; }
+.app-preview-caption a { font-size:10px; }
+.app-preview-credit { padding:0 12px 12px; font-size:8px; }
+.tool-demo { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,320px); gap:16px 64px; align-items:center; }
+.tool-demo-intro { display:block; margin:0; grid-column:1; grid-row:1; align-self:end; }
+.tool-demo-intro > p { margin-top:20px; }
+.tool-demo video { grid-column:2; grid-row:1 / 4; aspect-ratio:9/16; max-width:320px; justify-self:center; }
+.tool-demo-note { grid-column:1; grid-row:2; margin:0; align-self:start; }
+@media(max-width:800px) { .hero-art.app-preview { width:min(100%,280px); } .tool-demo { display:flex; flex-direction:column; gap:20px; align-items:stretch; } .tool-demo-intro { margin:0; } .tool-demo video { width:min(100%,300px); align-self:center; } .tool-demo h2 { font-size:36px; } .tool-demo-note { font-size:11px; } }
+
+.app-preview-video { display:block; width:100%; height:auto; aspect-ratio:9/16; background:#203b52; }
+.app-preview-duration { font-family:"Geist Variable",sans-serif; font-size:10px; color:#506875; }

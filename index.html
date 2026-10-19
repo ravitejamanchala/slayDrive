@@ -98,11 +98,15 @@
             <span class="location-divider">/</span> £4.99 a month.
           </div>
         </div>
-        <figure class="hero-art app-preview">
-          <div class="app-preview-bar"><span class="app-preview-dot" aria-hidden="true"></span> INSIDE THE DRIVING TOOL <span class="app-preview-quality">ACTUAL SCREENSHOT</span></div>
-          <img class="app-preview-image" src="/media/dutch-roundabout-screenshot.jpg" width="1920" height="1080" fetchpriority="high" alt="Screenshot of the driving app: a Dutch-style roundabout with a red cycle ring, cyclists, learner car and driving guidance." />
-          <figcaption class="app-preview-caption"><span>Dutch-style roundabout<small>Explore the road. Learn the priorities.</small></span><a href="#tool-demo" aria-label="Watch the Dutch roundabout tool demo">Watch demo <span aria-hidden="true">→</span></a></figcaption>
-          <p class="app-preview-credit">Map data © OpenStreetMap contributors</p>
+        <figure class="hero-art app-preview" id="tool-demo">
+          <div class="app-preview-bar"><span class="app-preview-dot" aria-hidden="true"></span> INSIDE THE DRIVING TOOL </div>
+          <video class="app-preview-video" controls playsinline preload="none" poster="/media/driving-demo-poster.jpg" aria-label="Short mobile driving demo at the Dutch roundabout" aria-describedby="mobile-demo-description">
+            <source src="/media/driving-demo.mp4" type="video/mp4" />
+            <track kind="captions" src="/media/driving-demo.vtt" srclang="en" label="English" default />
+            Your browser does not support video. <a href="/media/driving-demo.mp4">Download the demo</a>.
+          </video>
+          <figcaption class="app-preview-caption"><span>Dutch roundabout</span><span class="app-preview-duration">Mobile view · 5 sec</span></figcaption>
+          <p class="app-preview-credit" id="mobile-demo-description">Staged collision · Real feedback<br />Map data © OpenStreetMap contributors</p>
         </figure>
         <div class="hero-foot">
           <span>SMALL PRACTICE. BIG POSSIBILITIES.</span
@@ -110,20 +114,6 @@
             >Meet your new co-driver <span aria-hidden="true">↓</span></a
           ><span>SCROLL TO EXPLORE</span>
         </div>
-      </section>
-      <section class="tool-demo" id="tool-demo" aria-labelledby="tool-demo-title">
-        <div class="tool-demo-intro">
-          <div><p class="eyebrow">DUTCH-STYLE ROUNDABOUT · TOOL DEMO</p><h2 id="tool-demo-title">Every turn teaches.</h2></div>
-          <p>Watch the Dutch-style roundabout in Full HD, including the feedback shown after a collision with a cyclist.</p>
-        </div>
-        <video controls playsinline preload="none" poster="/media/driving-demo-poster.jpg" aria-label="Dutch-style roundabout demonstration with cyclist-collision feedback" aria-describedby="tool-demo-description">
-          <source src="/media/driving-demo.mp4" type="video/mp4" />
-          <track kind="captions" src="/media/driving-demo.vtt" srclang="en" label="English" default />
-          Your browser does not support video. <a href="/media/driving-demo.mp4">Download the driving demo</a>.
-        </video>
-        <a class="demo-download" href="/media/driving-demo.mp4" download>Download the Full HD demo</a>
-        <p class="tool-demo-note" id="tool-demo-description">Full HD 1080p · Silent demo · Use fullscreen or rotate your phone for a closer look. A staged incorrect approach showing the tool’s real cyclist-collision feedback. Map data © OpenStreetMap contributors.</p>
-        <details><summary>Read the video description</summary><p>The camera follows a learner car approaching a Dutch-style roundabout with a separate cycle ring. In this staged example, the car fails to give way to a cyclist. The tool records a serious fault and displays “Collided with a cyclist”. Cyclists have priority at the cycle crossings.</p></details>
       </section>
       <div class="ticker" aria-hidden="true">
         <div>
