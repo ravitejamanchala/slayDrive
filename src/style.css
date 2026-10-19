@@ -2212,3 +2212,5 @@ h2,h3 { font-weight:600; }
 .tool-demo details { margin-top:12px; font-size:13px; line-height:1.7; color:#506875; }
 .tool-demo summary { cursor:pointer; color:#1c3948; font-weight:600; }
 @media(max-width:800px) { .tool-demo { padding:48px 6%; } .tool-demo-intro { display:block; } .tool-demo-intro > p { margin-top:16px; } .tool-demo video { border-radius:16px; } }
+
+.demo-download { display:inline-block; margin-top:24px; font-size:14px; font-weight:600; color:#087177; text-decoration:underline; text-underline-offset:4px; }
