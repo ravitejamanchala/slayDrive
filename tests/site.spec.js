@@ -166,10 +166,28 @@ test('hero carousel supports keyboard browsing and respects reduced motion', asy
   await expect.poll(() => video.evaluate(v => v.paused)).toBe(true);
   await carousel.focus();
   await page.keyboard.press('ArrowRight');
-  await expect(carousel.locator('.carousel-status')).toContainText('Blue compact');
-  await expect(video.locator('source')).toHaveAttribute('src', '/media/compact-demo.mp4');
+  await expect(carousel.locator('.hero-feedback')).toHaveAttribute('data-slot', 'center');
+  await expect(carousel.locator('.hero-feedback img')).toHaveAttribute('src', '/media/police-garage.png');
   await expect.poll(() => video.evaluate(v => v.paused)).toBe(true);
   await page.keyboard.press('ArrowLeft');
-  await expect(carousel.locator('.carousel-status')).toContainText('RX-7');
+  await expect(carousel.locator('.app-preview')).toHaveAttribute('data-slot', 'center');
+  await expect(video.locator('source')).toHaveAttribute('src', '/media/compact-demo.mp4');
   await expect(page.locator('.collection-car')).toHaveCount(8);
+});
+
+
+test('car collection scrolls one card with keyboard and supports dragging', async ({ page }) => {
+  await page.goto('/');
+  const track = page.locator('.car-collection');
+  await track.focus();
+  await page.keyboard.press('ArrowRight');
+  await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBeGreaterThan(100);
+  await page.keyboard.press('Home');
+  await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBe(0);
+  const box = await track.boundingBox();
+  await page.mouse.move(box.x + 300, box.y + 100);
+  await page.mouse.down();
+  await page.mouse.move(box.x + 80, box.y + 100, {steps:8});
+  await page.mouse.up();
+  await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBeGreaterThan(100);
 });

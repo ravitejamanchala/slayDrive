@@ -121,3 +121,31 @@
 .collection-car figcaption { font-family:"Fredoka Variable",sans-serif; font-size:21px; }
 @media(max-width:800px) { .collection-heading { display:block; margin:30px 0; } .collection-heading p { margin-top:20px; } .car-collection { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } .collection-car { padding:6px 6px 18px; border-radius:16px; } .collection-car figcaption { font-size:17px; } .stage-index { gap:10px; } }
 .marketing-home .hero .open-word { color:#066a70; }
+/* A single, draggable row gives the garage room to breathe. */
+.car-collection { display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; touch-action:pan-y; cursor:grab; padding:4px 0 12px; }
+.car-collection::-webkit-scrollbar { display:none; }
+.collection-car { flex:0 0 29%; scroll-snap-align:start; user-select:none; }
+.collection-car img { -webkit-user-drag:none; }
+.car-collection.is-dragging { cursor:grabbing; scroll-snap-type:none; }
+.collection-footer { display:flex; align-items:center; justify-content:space-between; margin-top:18px; color:#506875; font-size:12px; }
+.cars-pause { background:none; border:0; border-bottom:1px solid currentColor; padding:5px 0; font-size:11px; }
+@media(max-width:800px) { .car-collection { gap:14px; } .collection-car { flex-basis:72%; } }
+/* Each screen moves into the next slot; the card content travels with it. */
+.hero-stage { height:700px; }
+.marketing-home .hero-stage > figure { position:absolute; width:44%; max-width:270px; left:28%; right:auto; top:62px; margin:0; rotate:0deg; transition:translate .7s cubic-bezier(.22,.8,.25,1),scale .7s cubic-bezier(.22,.8,.25,1),rotate .7s ease; }
+.hero-stage > figure[data-slot="center"] { translate:0 0; scale:1; rotate:0deg; z-index:3; }
+.hero-stage > figure[data-slot="left"] { translate:-76% 22px; scale:.84; rotate:-8deg; z-index:1; }
+.hero-stage > figure[data-slot="right"] { translate:76% 72px; scale:.84; rotate:8deg; z-index:2; }
+.hero-stage .hero-side-screen img { border:5px solid #203b52; border-radius:24px; }
+@media(max-width:800px) {
+ .hero-stage { height:clamp(460px,calc(100vw + 140px),700px); }
+ .marketing-home .hero-stage > figure { width:55%; max-width:none; left:22.5%; top:44px; }
+ .hero-stage > figure[data-slot="left"] { translate:-55% 15px; scale:.72; rotate:-7deg; }
+ .hero-stage > figure[data-slot="right"] { translate:55% 65px; scale:.72; rotate:7deg; }
+ .hero-stage .hero-side-screen img { border-width:4px; border-radius:20px; }
+}
+@media(min-width:500px) and (max-width:800px) { .hero-stage { height:700px; } }
+@media(prefers-reduced-motion:reduce) { .marketing-home .hero-stage > figure { transition:none; } }
+.marketing-home .hero-stage > figure { justify-self:start; align-self:start; bottom:auto; grid-area:auto; }
+.hero-stage { display:block; }
+.marketing-home .hero-stage > figure.app-preview { position:absolute; }
