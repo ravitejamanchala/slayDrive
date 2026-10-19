@@ -67,3 +67,7 @@ SLAYDRIVE_CHROMIUM_PATH=/usr/bin/chromium npm test
 ```
 
 Automated accessibility checks use axe-core against WCAG A/AA criteria; they complement manual review and do not certify full accessibility compliance. Layout checks cover widths from 320 to 1440 pixels. The test suite also applies the production Content Security Policy during a functional browser check.
+
+## Tool demo video (preview)
+
+`public/media/driving-demo.mp4` is a silent 12-second recording of the free controlled-stop practice lesson from `ravitejamanchala/cambridge-learner-driv`, branch `recovery/stripe-subscriptions-2026-10-15`, commit `d28a646a9a11d5c8d19e2dfa969612da60b97665`. Captured locally with automated steering/throttle inputs through the app’s existing recording hooks. No paid access or live account was used. The source tool was not modified. The video includes its on-screen OpenStreetMap attribution; captions and an adjacent description explain the demonstration. The player does not autoplay and loads the video only on demand. The marketing preview uses this branch’s blue/teal palette and Fredoka/Geist fonts.

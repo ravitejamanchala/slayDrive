@@ -2150,47 +2150,47 @@ dialog .privacy-note {
 }
 
 
-/* Preview: visual language shared with the Cambridge learner driving app. */
-:root { --paper:#fff6ea; --ink:#3b2416; --orange:#b74d14; --line:#e6c9ac; --muted:#7a5a45; background:var(--paper); color:var(--ink); }
-.header { max-width:none; height:96px; background:#f39a52; border-color:#dc843f; }
+/* Preview: visual language shared with the Cambridge learner driving app subscription branch. */
+:root { --paper:#fff6ea; --ink:#1c3948; --orange:#087f83; --line:#c4dedb; --muted:#506875; background:var(--paper); color:var(--ink); }
+.header { max-width:none; height:96px; background:#79a9d2; border-color:#5c91bd; }
 .wordmark { font-family:"Fredoka Variable",sans-serif; font-weight:700; letter-spacing:-1px; }
-.header-cta { border:3px solid #fff; background:#fff6ea; border-radius:999px; box-shadow:0 4px 0 #de7a33; font-weight:650; }
-.header-cta:hover { background:#fff; color:#3b2416; }
-.hero { max-width:none; background:radial-gradient(ellipse at 70% 50%,#ffc28c 0%,#f39a52 70%); padding-top:40px; gap:0 60px; }
+.header-cta { border:3px solid #fff; background:#fff6ea; border-radius:999px; box-shadow:0 4px 0 #087f83; font-weight:650; }
+.header-cta:hover { background:#fff; color:#1c3948; }
+.hero { max-width:none; background:radial-gradient(ellipse at 70% 50%,#a1cce5 0%,#79a9d2 70%); padding-top:40px; gap:0 60px; }
 .hero-copy { padding:30px 0 40px; }
 h1 { font-weight:650; letter-spacing:-3.5px; font-size:clamp(64px,7.3vw,108px); }
-.hero .open-word { color:#fff6ea; text-shadow:0 4px 0 #b95324; }
-.hero .open-word svg { stroke:#763551; stroke-width:3; }
-.hero-description, .hero-location { color:#5b3420; }
+.hero .open-word { color:#fff6ea; text-shadow:0 4px 0 #34627f; }
+.hero .open-word svg { stroke:#087f83; stroke-width:3; }
+.hero-description, .hero-location { color:#294d61; }
 .eyebrow { letter-spacing:1.5px; }
 .button { font-family:"Fredoka Variable",sans-serif; font-size:17px; font-weight:600; border-radius:18px; }
 .hero .button-dark { background:linear-gradient(#fffaf2,#ffe9ef); color:#a92062; border:3px solid #fff; box-shadow:0 5px 0 #bb386f,0 12px 24px -15px #7a3049; }
 .hero .button-dark:hover { background:#fff; }
-.hero .button-arrow { background:#fbe6cf; color:#a92062; border-radius:50%; }
-.hero-art { background:#c6b3fb; color:#3b2450; min-height:540px; border:4px solid #fff; border-radius:28px; box-shadow:0 7px 0 #8a6ae3,0 22px 40px -20px #724536; }
+.hero .button-arrow { background:#e1f2ed; color:#a92062; border-radius:50%; }
+.hero-art { background:#38cbb9; color:#123f46; min-height:540px; border:4px solid #fff; border-radius:28px; box-shadow:0 7px 0 #087f83,0 22px 40px -20px #355c71; }
 .road-art { border-radius:24px; }
 .round-stamp { display:none; }
-.road-note { border-radius:14px; background:#fff6ea; box-shadow:0 4px 0 #e7a36c; }
-.hero-foot { margin-top:36px; border-color:#b6652f; color:#5b3420; }
-.hero-foot > a { color:#3b2416; }
+.road-note { border-radius:14px; background:#fff6ea; box-shadow:0 4px 0 #91cfc6; }
+.hero-foot { margin-top:36px; border-color:#4c80a8; color:#294d61; }
+.hero-foot > a { color:#1c3948; }
 .perspective { padding-top:60px; padding-bottom:70px; }
 .perspective-main { margin-top:45px; }
 h2,h3 { font-weight:600; }
 .perspective h2 { letter-spacing:-2px; }
-.muted { color:#795841; }
-.journey { background:#fbe6cf; }
-.journey-tabs { background:#fff6ea; border-radius:24px; border:3px solid #fff; box-shadow:0 5px 0 #e7a36c; overflow:hidden; }
-.journey-tabs > button[aria-selected="true"] { background:#c6b3fb; color:#3b2450; }
-.journey-tabs > button[aria-selected="true"] small, .journey-tabs > button[aria-selected="true"] .tab-number { color:#493264; }
-.journey-panel { border-radius:24px; border:3px solid #fff; box-shadow:0 5px 0 #e7a36c; }
-.next { background:#c6b3fb; color:#3b2450; border:4px solid #fff; border-radius:28px; margin:36px 5%; box-shadow:0 7px 0 #8a6ae3; }
-.next .section-label,.next-copy > p,.membership-caption { color:#493264; }
+.muted { color:#506875; }
+.journey { background:#e1f2ed; }
+.journey-tabs { background:#fff6ea; border-radius:24px; border:3px solid #fff; box-shadow:0 5px 0 #91cfc6; overflow:hidden; }
+.journey-tabs > button[aria-selected="true"] { background:#38cbb9; color:#123f46; }
+.journey-tabs > button[aria-selected="true"] small, .journey-tabs > button[aria-selected="true"] .tab-number { color:#164f57; }
+.journey-panel { border-radius:24px; border:3px solid #fff; box-shadow:0 5px 0 #91cfc6; }
+.next { background:#38cbb9; color:#123f46; border:4px solid #fff; border-radius:28px; margin:36px 5%; box-shadow:0 7px 0 #087f83; }
+.next .section-label,.next-copy > p,.membership-caption { color:#164f57; }
 .next h2 { font-weight:600; letter-spacing:-2px; }
-.next h2 .serif { color:#3b2450; font-family:"Fredoka Variable",sans-serif; }
-.pricing-card { background:#fff6ea; border:3px solid #fff; border-radius:22px; box-shadow:0 5px 0 #8a6ae3; transform:rotate(1deg); }
+.next h2 .serif { color:#123f46; font-family:"Fredoka Variable",sans-serif; }
+.pricing-card { background:#fff6ea; border:3px solid #fff; border-radius:22px; box-shadow:0 5px 0 #087f83; transform:rotate(1deg); }
 .button-orange { background:linear-gradient(#ff91c1,#f26aa7); color:#611537; border:2px solid #fff; box-shadow:0 4px 0 #b8306f; }
 .button-orange:hover { background:#ffb0d2; }
-.footer { background:#fbe6cf; }
+.footer { background:#e1f2ed; }
 @media(max-width:800px) {
  .header { height:80px; }
  .hero { padding:22px 6% 0; gap:24px; }
@@ -2200,5 +2200,15 @@ h2,h3 { font-weight:600; }
  .hero-foot { margin-top:8px; }
  .next { margin:20px 4%; }
 }
-.footer-top p { color:#7a5a45; }
-.guide-cta { background:#f39a52; }
+.footer-top p { color:#506875; }
+.guide-cta { background:#79a9d2; }
+
+.tool-demo { padding:72px 5%; background:#e1f2ed; }
+.tool-demo-intro { display:flex; justify-content:space-between; align-items:end; gap:32px; margin-bottom:30px; }
+.tool-demo h2 { font-size:clamp(36px,4.5vw,64px); letter-spacing:-1.5px; margin-top:12px; }
+.tool-demo-intro > p { max-width:360px; color:#506875; line-height:1.7; font-size:15px; }
+.tool-demo video { display:block; width:100%; height:auto; aspect-ratio:16/9; background:#203b52; border:4px solid white; border-radius:24px; box-shadow:0 6px 0 #91cfc6; }
+.tool-demo-note { font-size:12px; line-height:1.7; color:#506875; margin-top:20px; max-width:760px; }
+.tool-demo details { margin-top:12px; font-size:13px; line-height:1.7; color:#506875; }
+.tool-demo summary { cursor:pointer; color:#1c3948; font-weight:600; }
+@media(max-width:800px) { .tool-demo { padding:48px 6%; } .tool-demo-intro { display:block; } .tool-demo-intro > p { margin-top:16px; } .tool-demo video { border-radius:16px; } }
