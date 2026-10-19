@@ -43,7 +43,7 @@ Production domains are `https://slaydrive.com` and `https://www.slaydrive.com`. 
 
 The complete website source and content live in `ravitejamanchala/slayDrive`. Every push to `main` runs `.github/workflows/deploy.yml`: install dependencies, build and run browser tests, then deploy `dist/` to the existing Cloudflare Pages project `slaydrive`. The workflow can also be run manually in GitHub Actions.
 
-Set these GitHub Actions repository secrets before the first deployment:
+Set these GitHub Actions secrets in the `cloudflare` environment before the first deployment:
 
 - `CLOUDFLARE_API_TOKEN`: a Cloudflare API token with Account / Cloudflare Pages / Edit permission for the hosting account.
 - `CLOUDFLARE_ACCOUNT_ID`: the Cloudflare account ID.
