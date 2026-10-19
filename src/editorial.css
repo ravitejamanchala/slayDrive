@@ -1,15 +1,15 @@
 /* Product-led homepage: authentic screens, restrained surfaces and scroll depth. */
 .marketing-home { background:#fffaf2; }
-.marketing-home h1,.marketing-home h2,.marketing-home h3 { font-family:"Geist Variable",sans-serif; font-weight:550; }
+.marketing-home h1,.marketing-home h2,.marketing-home h3 { font-family:"Fredoka Variable",sans-serif; font-weight:550; }
 .marketing-home .header { background:#fffaf2; border-color:#d9e3df; height:88px; }
 .marketing-home .header-cta { border:1px solid #1c3948; box-shadow:none; background:transparent; }
 .marketing-home .hero { background:#fffaf2; grid-template-columns:1.05fr 1fr; gap:0 5%; padding-top:34px; }
 .marketing-home .hero-copy { padding:40px 0 64px; }
-.marketing-home h1 { font-size:clamp(62px,7.2vw,108px); line-height:1.02; letter-spacing:-.065em; }
+.marketing-home h1 { font-size:clamp(62px,7.2vw,108px); line-height:1.02; letter-spacing:-.035em; }
 .marketing-home .hero .open-word { color:#087f83; text-shadow:none; }
 .marketing-home .open-word svg { display:none; }
 .marketing-home .hero-description { max-width:440px; font-size:17px; line-height:1.8; }
-.marketing-home .button { font-family:"Geist Variable",sans-serif; border-radius:999px; font-size:14px; }
+.marketing-home .button { font-family:"Fredoka Variable",sans-serif; border-radius:999px; font-size:14px; }
 .marketing-home .hero .button-dark { background:#1c3948; color:#fffaf2; border:0; box-shadow:none; }
 .marketing-home .hero .button-arrow { background:#38cbb9; color:#1c3948; }
 .marketing-home .hero-location { font-size:11px; }
@@ -69,3 +69,37 @@
 .marketing-home .start { background:#a1cce5; color:#1c3948; }
 .marketing-home .start-top .eyebrow,.marketing-home .start-main p { color:#294d61; }
 .marketing-home .start .serif { color:#1c3948; }
+
+/* Three authentic mobile screens, with the playable demo in front. */
+.marketing-home .hero { grid-template-columns:.92fr 1.08fr; gap:0 3%; }
+.hero-stage { min-width:0; padding:64px 0 60px; border-radius:120px 120px 24px 24px; }
+.marketing-home .hero-stage .app-preview { position:relative; z-index:2; width:44%; max-width:270px; }
+.hero-side-screen { position:absolute; width:35%; margin:0; z-index:1; }
+.hero-side-screen img { display:block; width:100%; height:auto; border:4px solid #fff6ea; border-radius:22px; box-shadow:0 22px 40px -18px #203b5290; }
+.hero-side-screen figcaption { text-align:center; margin-top:14px; font-family:"Fredoka Variable",sans-serif; font-size:12px; color:#1c3948; }
+.hero-garage { left:2%; top:14%; rotate:-8deg; }
+.hero-feedback { right:2%; top:28%; rotate:8deg; }
+.marketing-home .app-preview-caption { flex-wrap:wrap; gap:4px; }
+@media(max-width:800px) {
+ .marketing-home .hero { grid-template-columns:1fr; gap:24px; }
+ .hero-stage { max-width:560px; padding:44px 0 54px; border-radius:90px 90px 20px 20px; }
+ .marketing-home .hero-stage .app-preview { width:55%; max-width:270px; border-width:4px; border-radius:20px; }
+ .hero-side-screen { width:37%; }
+ .hero-side-screen img { border-width:3px; border-radius:16px; }
+ .hero-garage { left:2%; top:16%; rotate:-7deg; }
+ .hero-feedback { right:2%; top:35%; rotate:7deg; }
+ .hero-side-screen figcaption { font-size:10px; margin-top:10px; }
+ .marketing-home .hero-stage .app-preview-bar { font-size:6px; letter-spacing:.4px; padding:9px 2px; gap:4px; }
+ .marketing-home .hero-stage .app-preview-caption { font-size:11px; padding:9px 7px 5px; }
+ .marketing-home .hero-stage .app-preview-credit { font-size:7px; padding:0 7px 8px; }
+ .stage-index { font-size:8px; letter-spacing:1.5px; }
+}
+
+.marketing-home .cambridge { grid-template-columns:1.35fr 1fr; min-height:680px; }
+.desktop-showcase { margin:0; min-width:0; align-self:center; }
+.desktop-showcase-bar { display:flex; justify-content:space-between; padding:15px 18px; background:#fff6ea; color:#1c3948; border-radius:16px 16px 0 0; font-size:9px; letter-spacing:1px; }
+.desktop-showcase-bar > span:first-child { color:#087f83; letter-spacing:4px; }
+.desktop-showcase img { width:100%; height:auto; display:block; border:4px solid #fff6ea; border-top:0; border-radius:0 0 12px 12px; box-shadow:0 25px 50px -25px #0009; }
+.desktop-showcase figcaption { color:#d0dfe4; font-size:10px; margin-top:18px; }
+@media(min-width:1000px) { .marketing-home .cambridge-copy { margin-top:0; align-self:center; } }
+@media(max-width:800px) { .marketing-home .cambridge { min-height:0; } .desktop-showcase { width:100%; } .desktop-showcase-bar { padding:12px; font-size:8px; } }
