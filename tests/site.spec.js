@@ -158,3 +158,18 @@ test("production CSP permits page scripts, fonts and quiz interaction", async ({
   await expect(page.locator("#quiz-feedback")).toContainText("That’s right");
   expect(errors).toEqual([]);
 });
+
+test('hero carousel supports keyboard browsing and respects reduced motion', async ({ page }) => {
+  await page.goto('/');
+  const carousel = page.getByRole('region', { name: /App previews/ });
+  const video = carousel.locator('video');
+  await expect.poll(() => video.evaluate(v => v.paused)).toBe(true);
+  await carousel.focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(carousel.locator('.carousel-status')).toContainText('Blue compact');
+  await expect(video.locator('source')).toHaveAttribute('src', '/media/compact-demo.mp4');
+  await expect.poll(() => video.evaluate(v => v.paused)).toBe(true);
+  await page.keyboard.press('ArrowLeft');
+  await expect(carousel.locator('.carousel-status')).toContainText('RX-7');
+  await expect(page.locator('.collection-car')).toHaveCount(8);
+});

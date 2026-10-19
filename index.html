@@ -98,7 +98,7 @@
             <span class="location-divider">/</span> £4.99 a month.
           </div>
         </div>
-        <div class="hero-stage">
+        <div class="hero-stage" tabindex="0" role="region" aria-roledescription="carousel" aria-label="App previews. Swipe or use left and right arrow keys to browse.">
           <figure class="hero-side-screen hero-garage" data-parallax="0.065">
             <img src="/media/app-garage.png" width="1080" height="1920" alt="Mobile app garage showing the learner car and lesson selection" />
             <figcaption>Choose your drive</figcaption>
@@ -108,14 +108,14 @@
             <figcaption>Learn as you go</figcaption>
           </figure><figure class="hero-art app-preview" id="tool-demo" data-parallax="-0.045">
           <div class="app-preview-bar"><span class="app-preview-dot" aria-hidden="true"></span> INSIDE THE DRIVING TOOL </div>
-          <video class="app-preview-video" controls playsinline preload="none" poster="/media/driving-demo-poster.jpg" aria-label="Short mobile driving demo at the Dutch roundabout" aria-describedby="mobile-demo-description">
+          <video class="app-preview-video" autoplay muted loop playsinline preload="metadata" poster="/media/driving-demo-poster.jpg" aria-label="Short mobile driving demo at the Dutch roundabout" aria-describedby="mobile-demo-description">
             <source src="/media/driving-demo.mp4" type="video/mp4" />
             <track kind="captions" src="/media/driving-demo.vtt" srclang="en" label="English" default />
             Your browser does not support video. <a href="/media/driving-demo.mp4">Download the demo</a>.
           </video>
           <figcaption class="app-preview-caption"><span>Dutch roundabout</span><span class="app-preview-duration">Mobile view · 5 sec</span></figcaption>
           <p class="app-preview-credit" id="mobile-demo-description">Staged collision · Real feedback<br />Map data © OpenStreetMap contributors</p>
-        </figure><span class="stage-index">CHOOSE. PRACTISE. UNDERSTAND.</span></div>
+        </figure><div class="stage-index"><span class="carousel-status" aria-live="off">01 / 02 · RX-7</span><button class="carousel-pause" type="button" aria-label="Pause carousel and video">Pause motion</button></div></div>
         <div class="hero-foot">
           <span>SMALL PRACTICE. BIG POSSIBILITIES.</span
           ><a href="#perspective"
@@ -157,61 +157,9 @@
         id="perspective"
         aria-labelledby="perspective-title"
       >
-        <div class="section-label reveal">
-          <span>01 / YOUR NEW CO-DRIVER</span
-          ><span>A LITTLE PRACTICE GOES A LONG WAY</span>
-        </div>
-        <div class="perspective-main reveal">
-          <div class="small-intro">
-            <span class="asterisk" aria-hidden="true"
-              ><svg class="icon-spark" viewBox="0 0 40 40" aria-hidden="true">
-                <path d="M20 3v34M3 20h34M8 8l24 24M8 32 32 8" /></svg
-            ></span>
-            <p>For the moments<br />before the real thing.</p>
-          </div>
-          <div>
-            <h2 id="perspective-title">
-              Read it. Try it.<br /><span class="muted">Get it wrong.</span
-              ><br />Get it next time.
-            </h2>
-            <p class="body-copy">
-              Knowing the rules is one thing. Making sense of them on the road
-              is another. SlayDrive brings learning and practice together, so
-              you can explore the decisions behind the drive.
-            </p>
-            <p class="body-copy">
-              Mock tests you can keep coming back to. Different locations to
-              explore. Lessons and puzzles that make you think. All in one
-              monthly membership.
-            </p>
-          </div>
-        </div>
-        <div class="principles">
-          <article class="reveal">
-            <span class="principle-number">01</span>
-            <h3>Practice without the pressure.</h3>
-            <p>
-              Take unlimited simulator-style mock tests with your subscription.
-              Make space to practise, reflect and try again.
-            </p>
-          </article>
-          <article class="reveal">
-            <span class="principle-number">02</span>
-            <h3>Rules that make sense.</h3>
-            <p>
-              Explore Highway Code lessons and connect what you learn to the
-              choices you make behind the wheel.
-            </p>
-          </article>
-          <article class="reveal">
-            <span class="principle-number">03</span>
-            <h3>A fresh way to think.</h3>
-            <p>
-              Put your road knowledge to work with puzzles and different
-              location maps. Keep your curiosity in the driving seat.
-            </p>
-          </article>
-        </div>
+        <div class="section-label"><span>01 / THE GARAGE</span><span>ACTUAL CARS FROM THE APP</span></div>
+        <div class="collection-heading"><h2 id="perspective-title">Find your<br /><span class="serif">next drive.</span></h2><p>From the city hatchback to the RX-7. Explore the collection and choose your car in the app.</p></div>
+        <div class="car-collection"><figure class="collection-car"><img src="/media/cars/car-rx7.png" alt="RX-7 from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>RX-7</figcaption></figure><figure class="collection-car"><img src="/media/cars/car-compact.png" alt="Blue compact from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>Blue compact</figcaption></figure><figure class="collection-car"><img src="/media/cars/car-hatchback.png" alt="City hatchback from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>City hatchback</figcaption></figure><figure class="collection-car"><img src="/media/cars/car-suv.png" alt="SUV from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>SUV</figcaption></figure><figure class="collection-car"><img src="/media/cars/car-sports.png" alt="Sports coupe from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>Sports coupe</figcaption></figure><figure class="collection-car"><img src="/media/cars/car-sports-2.png" alt="Sports coupe 2 from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>Sports coupe 2</figcaption></figure><figure class="collection-car"><img src="/media/cars/car-taxi.png" alt="Taxi from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>Taxi</figcaption></figure><figure class="collection-car"><img src="/media/cars/car-police.png" alt="Police car from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>Police car</figcaption></figure></div>
       </section>
       <section
         class="journey section-pad"

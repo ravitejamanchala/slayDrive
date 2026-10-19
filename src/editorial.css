@@ -103,3 +103,21 @@
 .desktop-showcase figcaption { color:#d0dfe4; font-size:10px; margin-top:18px; }
 @media(min-width:1000px) { .marketing-home .cambridge-copy { margin-top:0; align-self:center; } }
 @media(max-width:800px) { .marketing-home .cambridge { min-height:0; } .desktop-showcase { width:100%; } .desktop-showcase-bar { padding:12px; font-size:8px; } }
+/* The hero shares one blue canvas; the three-screen composition stays intact. */
+.marketing-home .header,.marketing-home .hero { background:#a1cce5; }
+.marketing-home .header { border-color:#82b3ce; }
+.hero-stage { background:transparent; touch-action:pan-y; cursor:grab; user-select:none; }
+.hero-stage:active { cursor:grabbing; }
+.hero-stage img { -webkit-user-drag:none; }
+.stage-index { display:flex; align-items:center; justify-content:center; gap:16px; width:100%; letter-spacing:1px; }
+.carousel-pause { border:0; border-bottom:1px solid currentColor; background:transparent; padding:5px 0; font-size:10px; }
+.collection-heading { display:flex; align-items:end; justify-content:space-between; gap:32px; margin:45px 0; }
+.collection-heading h2 { font-size:clamp(42px,5vw,70px); line-height:1.08; }
+.collection-heading p { max-width:350px; font-size:15px; line-height:1.8; color:#506875; }
+.car-collection { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; }
+.collection-car { margin:0; background:#e1f2ed; border-radius:22px; padding:14px 14px 22px; text-align:center; }
+.collection-car:nth-child(2n) { background:#e7eff4; }
+.collection-car img { display:block; width:100%; height:auto; aspect-ratio:1; object-fit:contain; }
+.collection-car figcaption { font-family:"Fredoka Variable",sans-serif; font-size:21px; }
+@media(max-width:800px) { .collection-heading { display:block; margin:30px 0; } .collection-heading p { margin-top:20px; } .car-collection { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; } .collection-car { padding:6px 6px 18px; border-radius:16px; } .collection-car figcaption { font-size:17px; } .stage-index { gap:10px; } }
+.marketing-home .hero .open-word { color:#066a70; }

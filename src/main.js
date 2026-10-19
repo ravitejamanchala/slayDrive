@@ -216,3 +216,82 @@ addEventListener('scroll', queueDepth, { passive:true });
 addEventListener('resize', queueDepth);
 motionQuery.addEventListener('change', queueDepth);
 queueDepth();
+
+const carousel = document.querySelector('.hero-stage');
+const demoVideo = carousel.querySelector('video');
+const pauseMotion = carousel.querySelector('.carousel-pause');
+const carouselStatus = carousel.querySelector('.carousel-status');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const previews = [
+  { name:'RX-7', garage:'app-garage.png', feedback:'app-feedback.jpg', poster:'driving-demo-poster.jpg', video:'driving-demo.mp4' },
+  { name:'Blue compact', garage:'compact-garage.png', feedback:'compact-feedback.jpg', poster:'compact-poster.jpg', video:'compact-demo.mp4' },
+];
+let previewIndex = 0;
+let userPaused = reducedMotion.matches;
+let carouselVisible = true;
+let carouselTimer;
+let pointerStart = null;
+demoVideo.muted = true;
+function syncCarousel() {
+  clearInterval(carouselTimer);
+  const running = !userPaused && carouselVisible && !document.hidden;
+  pauseMotion.textContent = userPaused ? 'Play motion' : 'Pause motion';
+  pauseMotion.setAttribute('aria-label', userPaused ? 'Play carousel and video' : 'Pause carousel and video');
+  if (running) {
+    demoVideo.play().catch(() => { demoVideo.controls = true; });
+    carouselTimer = setInterval(() => showPreview(previewIndex + 1), 8000);
+  } else demoVideo.pause();
+}
+function showPreview(index) {
+  previewIndex = (index + previews.length) % previews.length;
+  const item = previews[previewIndex];
+  const garage = carousel.querySelector('.hero-garage img');
+  const feedbackImage = carousel.querySelector('.hero-feedback img');
+  garage.src = '/media/' + item.garage;
+  garage.alt = `${item.name} selected in the app’s mobile garage`;
+  feedbackImage.src = '/media/' + item.feedback;
+  feedbackImage.alt = `${item.name} driving demo with cyclist collision feedback`;
+  demoVideo.poster = '/media/' + item.poster;
+  demoVideo.querySelector('source').src = '/media/' + item.video;
+  demoVideo.setAttribute('aria-label', `${item.name}: short mobile driving demo at the Dutch roundabout`);
+  demoVideo.load();
+  carouselStatus.textContent = `0${previewIndex + 1} / 02 · ${item.name}`;
+  if (!reducedMotion.matches) {
+    [garage, feedbackImage, demoVideo].forEach(el => el.animate(
+      [{opacity:.3, translate:'12px 0'}, {opacity:1, translate:'0 0'}],
+      {duration:450, easing:'ease-out'},
+    ));
+  }
+  syncCarousel();
+}
+pauseMotion.addEventListener('click', () => { userPaused = !userPaused; syncCarousel(); });
+carousel.addEventListener('keydown', event => {
+  if (!['ArrowLeft','ArrowRight'].includes(event.key)) return;
+  event.preventDefault();
+  userPaused = true;
+  showPreview(previewIndex + (event.key === 'ArrowRight' ? 1 : -1));
+});
+carousel.addEventListener('pointerdown', event => {
+  if (event.target.closest('button') || event.button !== 0) return;
+  pointerStart = {x:event.clientX, y:event.clientY, id:event.pointerId};
+  carousel.setPointerCapture(event.pointerId);
+});
+carousel.addEventListener('pointerup', event => {
+  if (!pointerStart) return;
+  const dx = event.clientX - pointerStart.x;
+  const dy = event.clientY - pointerStart.y;
+  pointerStart = null;
+  if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy)) showPreview(previewIndex + (dx < 0 ? 1 : -1));
+});
+carousel.addEventListener('pointercancel', () => { pointerStart = null; });
+carousel.addEventListener('dragstart', event => event.preventDefault());
+carousel.addEventListener('focusin', event => {
+  if (event.target === carousel && carousel.matches(':focus-visible')) { userPaused = true; syncCarousel(); }
+});
+reducedMotion.addEventListener('change', () => { userPaused = reducedMotion.matches; syncCarousel(); });
+document.addEventListener('visibilitychange', syncCarousel);
+new IntersectionObserver(entries => {
+  carouselVisible = entries[0].isIntersecting;
+  syncCarousel();
+}, {threshold:.15}).observe(carousel);
+syncCarousel();
