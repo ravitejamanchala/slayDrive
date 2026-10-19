@@ -2148,3 +2148,51 @@ dialog .privacy-note {
     font-size: 5px;
   }
 }
+
+/* Refreshed design proposal — preview branch. */
+:root { --paper: #f6f7f2; --ink: #172a2b; --line: #dce2d9; background: var(--paper); color: var(--ink); }
+.header { max-width: none; height: 96px; background: #142829; color: #f6f7f2; border-color: #ffffff20; }
+.header .brand-spark, .header .tiny-dot { color: #d5f376; }
+.header .tiny-dot { background: #d5f376; }
+.header-cta { border-color: #d5f376; background: #d5f376; color: #142829; border-radius: 30px; }
+.header-cta:hover { background: #e4ff9c; color: #142829; }
+.hero { max-width: none; padding: 44px 5% 0; background: #142829; color: #f6f7f2; gap: 0 64px; }
+.hero-copy { padding: 30px 0 48px; }
+.hero .eyebrow { color: #d5f376; letter-spacing: 2px; }
+.hero .status-dot { background: #d5f376; }
+.hero h1 { font-weight: 650; font-size: clamp(64px,7.1vw,108px); letter-spacing: -6px; margin: 30px 0; }
+.hero .open-word { color: #d5f376; }
+.hero .open-word svg { stroke: #d5f376; stroke-width: 2; bottom: -10px; }
+.hero .orange-period { color: #d5f376; }
+.hero-description { color: #c6d2ce; max-width: 410px; }
+.hero .button-dark { border-radius: 40px; background: #d5f376; color: #142829; font-weight: 700; }
+.hero .button-dark:hover { background: #e4ff9c; }
+.hero .button-arrow { background: #142829; color: #d5f376; border-radius: 50%; }
+.hero-location { color: #c6d2ce; margin-top: 24px; }
+.hero-art, .road-art { border-radius: 26px; }
+.hero-art { min-height: 540px; box-shadow: 0 22px 64px #00000028; color: #172a2b; }
+.round-stamp { display: none; }
+.hero-foot { color: #c6d2ce; border-color: #ffffff24; margin-top: 40px; }
+.hero-foot > a { color: #d5f376; }
+.perspective { padding-top: 60px; padding-bottom: 72px; }
+.perspective-main { margin-top: 48px; }
+.perspective h2 { font-weight: 600; }
+.journey { background: #edf1e8; }
+.journey-tabs, .journey-panel { border-radius: 18px; overflow: hidden; }
+.journey-tabs > button[aria-selected="true"] { background: #172a2b; color: #fff; }
+.button { border-radius: 30px; }
+.next { border-radius: 26px; margin: 36px 5%; }
+@media (min-width:1500px) { .hero { padding-left: max(5%,calc((100vw - 1440px)/2)); padding-right: max(5%,calc((100vw - 1440px)/2)); } }
+@media (max-width:800px) {
+ .header { height: 80px; }
+ .hero { padding: 24px 6% 0; gap: 24px; }
+ .hero-copy { padding: 16px 0 8px; }
+ .hero h1 { font-size: clamp(56px,12vw,80px); letter-spacing: -3.8px; }
+ .hero-description { font-size: 15px; }
+ .hero-art { min-height: 430px; }
+ .hero-foot { margin-top: 8px; }
+ .next { margin: 20px 4%; border-radius: 20px; }
+ .menu-toggle span { background: #f6f7f2; }
+}
+.journey-tabs > button[aria-selected="true"] .tab-number,
+.journey-tabs > button[aria-selected="true"] small { color: #d5f376; }
