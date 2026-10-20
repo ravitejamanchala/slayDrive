@@ -3,38 +3,21 @@ import AxeBuilder from "@axe-core/playwright";
 import { readFileSync } from "node:fs";
 
 const guides = [
+  "/practice-between-driving-lessons/",
+  "/driving-practice-without-a-car/",
   "/mock-driving-tests/",
   "/highway-code/",
   "/driving-simulator/",
   "/driving-puzzles/",
 ];
 
-test("practice demo teaches the answer, resets between topics, and supports keyboard navigation", async ({
-  page,
-}) => {
-  await page.goto("/");
-  await page.locator('[data-answer="0"]').click();
-  await expect(page.locator("#quiz-feedback")).toContainText("Not quite");
-  await expect(page.locator("#quiz-feedback")).toContainText("rule 125");
-  await page.locator('[data-answer="1"]').click();
-  await expect(page.locator("#quiz-feedback")).toContainText("That’s right");
-  await page.getByRole("tab", { name: /Highway Code/ }).click();
-  await expect(page.locator("#quiz-feedback")).toBeEmpty();
-  await page.locator('[data-answer="0"]').click();
-  await expect(page.locator("#quiz-feedback")).toContainText("rule H2");
-  await page.getByRole("tab", { name: /Highway Code/ }).focus();
-  await page.keyboard.press("ArrowDown");
-  await expect(page.getByRole("tab", { name: /Road puzzles/ })).toBeFocused();
-  await expect(page.getByRole("tab", { name: /Road puzzles/ })).toHaveAttribute(
-    "aria-selected",
-    "true",
-  );
-  await page.locator('[data-answer="1"]').click();
-  await expect(page.locator("#quiz-feedback")).toContainText("rule 227");
-  await expect(page.locator("#quiz-source")).toHaveAttribute(
-    "href",
-    /driving-in-adverse-weather/,
-  );
+test('garage selection updates the featured car', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', {name:'Preview Blue compact',exact:true}).click();
+  await expect(page.locator('#selected-car-name')).toHaveText('Blue compact');
+  await expect(page.locator('#selected-car-image')).toHaveAttribute('src', '/media/cars/car-compact.png');
+  await expect(page.getByRole('button', {name:'Preview Blue compact',exact:true})).toHaveAttribute('aria-pressed','true');
+  await expect(page.locator('#journey')).toHaveCount(0);
 });
 
 test("mobile navigation, FAQs and privacy dialog work", async ({ page }) => {
@@ -47,10 +30,10 @@ test("mobile navigation, FAQs and privacy dialog work", async ({ page }) => {
   ).toBeVisible();
   await page
     .getByRole("navigation", { name: "Mobile navigation" })
-    .getByRole("link", { name: /How it works/ })
+    .getByRole("link", { name: /The experience/ })
     .click();
   await expect(page.locator("#mobile-nav")).toBeHidden();
-  await expect(page).toHaveURL(/#journey$/);
+  await expect(page).toHaveURL(/#experience$/);
   await page
     .locator("summary")
     .filter({ hasText: "Are the mock tests really unlimited?" })
@@ -108,7 +91,7 @@ test("all pages have unique SEO metadata, valid local links and no horizontal ov
       ).toBe(true);
     }
   }
-  expect(titles.size).toBe(5);
+  expect(titles.size).toBe(guides.length + 1);
   expect(errors).toEqual([]);
 });
 
@@ -135,7 +118,7 @@ test("homepage and guide pass automated WCAG AA checks", async ({ page }) => {
   }
 });
 
-test("production CSP permits page scripts, fonts and quiz interaction", async ({
+test("production CSP permits page scripts, fonts and garage selection", async ({
   page,
 }) => {
   const csp = readFileSync("public/_headers", "utf8")
@@ -154,7 +137,54 @@ test("production CSP permits page scripts, fonts and quiz interaction", async ({
     });
   });
   await page.goto("/");
-  await page.locator('[data-answer="1"]').click();
-  await expect(page.locator("#quiz-feedback")).toContainText("That’s right");
+  await page.getByRole('button', {name:'Preview Blue compact',exact:true}).click();
+  await expect(page.locator('#selected-car-name')).toHaveText('Blue compact');
+  await expect(page.locator('#garage-simulator canvas')).toHaveAttribute('data-car', 'compact', {timeout:15000});
+  await expect(page.locator('.sim-status')).toBeHidden();
+  await page.getByRole('button', {name:'Preview Police car',exact:true}).click();
+  await expect(page.locator('#garage-simulator canvas')).toHaveAttribute('data-car', 'police', {timeout:15000});
   expect(errors).toEqual([]);
+});
+
+test('hero carousel supports keyboard browsing and respects reduced motion', async ({ page }) => {
+  await page.goto('/');
+  const carousel = page.getByRole('region', { name: /App previews/ });
+  const video = carousel.locator('video');
+  await expect.poll(() => video.evaluate(v => v.paused)).toBe(true);
+  await carousel.focus();
+  await page.keyboard.press('ArrowRight');
+  await expect(carousel.locator('.hero-feedback')).toHaveAttribute('data-slot', 'center');
+  await expect(carousel.locator('.hero-feedback img')).toHaveAttribute('src', '/media/police-garage.png');
+  await expect.poll(() => video.evaluate(v => v.paused)).toBe(true);
+  await page.keyboard.press('ArrowLeft');
+  await expect(carousel.locator('.app-preview')).toHaveAttribute('data-slot', 'center');
+  await expect(video.locator('source')).toHaveAttribute('src', '/media/compact-demo.mp4');
+  await expect(page.locator('.collection-car')).toHaveCount(8);
+});
+
+
+test('car collection scrolls one card with keyboard and supports dragging', async ({ page }) => {
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('/');
+  const track = page.locator('.car-collection');
+  await track.focus();
+  await page.keyboard.press('ArrowRight');
+  await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBeGreaterThan(30);
+  await page.keyboard.press('Home');
+  await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBe(0);
+  const box = await track.boundingBox();
+  await page.mouse.move(box.x + 300, box.y + 100);
+  await page.mouse.down();
+  await page.mouse.move(box.x + 80, box.y + 100, {steps:8});
+  await page.mouse.up();
+  await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBeGreaterThan(30);
+});
+
+
+test('SEO guides are in the sitemap and subscriptions open the app', async ({ page, request }) => {
+  const sitemap = await (await request.get('/sitemap.xml')).text();
+  for (const path of ['/', ...guides]) expect(sitemap).toContain(`<loc>https://slaydrive.com${path}</loc>`);
+  await page.goto('/');
+  await expect(page.locator('.pricing-card .button')).toHaveAttribute('href', 'https://manchala.co.uk/cambridge-learner-driv/');
+  await expect(page.locator('.practice-options')).toContainText('cannot replace supervised on-road experience');
 });

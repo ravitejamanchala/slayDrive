@@ -1,4 +1,5 @@
 import "./style.css";
+import "./editorial.css";
 
 document.documentElement.classList.add("js");
 document.querySelector("#year").textContent = new Date().getFullYear();
@@ -28,127 +29,7 @@ document.addEventListener("keydown", (event) => {
     menuButton.focus();
   }
 });
-const narrowScreen = matchMedia("(max-width: 800px)");
-narrowScreen.addEventListener("change", () => {
-  closeMenu();
-  document
-    .querySelector('[role="tablist"]')
-    .setAttribute(
-      "aria-orientation",
-      narrowScreen.matches ? "horizontal" : "vertical",
-    );
-});
-document
-  .querySelector('[role="tablist"]')
-  .setAttribute(
-    "aria-orientation",
-    narrowScreen.matches ? "horizontal" : "vertical",
-  );
-
-const rules = "https://www.gov.uk/guidance/the-highway-code/";
-const questions = {
-  mock: {
-    kicker: "A LITTLE TEST DRIVE",
-    question: "The limit is 30 mph. Is it always safe to drive at 30?",
-    answers: ["Yes, if the road is clear", "No, conditions may call for less"],
-    correct: 1,
-    explanation:
-      "A speed limit is a maximum, not a target. Weather, visibility, traffic and the road itself may mean you need to drive more slowly. Highway Code rule 125.",
-    source:
-      rules +
-      "general-rules-techniques-and-advice-for-all-drivers-and-riders-103-to-158",
-    symbol: "speed",
-  },
-  code: {
-    kicker: "KNOW THE WHY",
-    question:
-      "Someone is waiting to cross a side road you’re turning into. What should you do?",
-    answers: [
-      "Give way to the person waiting",
-      "Turn first because you’re on the road",
-    ],
-    correct: 0,
-    explanation:
-      "At a junction, you should give way to pedestrians crossing or waiting to cross a road into which or from which you are turning. Highway Code rule H2.",
-    source: rules + "introduction",
-    symbol: "crossing",
-  },
-  puzzle: {
-    kicker: "PUT YOUR ROAD SENSE TO WORK",
-    question: "A dry road turns wet. What should happen to your following gap?",
-    answers: ["Keep the same gap", "At least double the gap"],
-    correct: 1,
-    explanation:
-      "In wet weather, stopping distances will be at least double those on dry roads. Keep at least twice the normal following gap. Highway Code rule 227.",
-    source: rules + "driving-in-adverse-weather-conditions-226-to-237",
-    symbol: "rain",
-  },
-};
-const visuals = {
-  speed:
-    '<path d="M75 125L140 0H200L265 125" fill="#535d50"/><path d="M170 0V125" stroke="#faf5df" stroke-width="3" stroke-dasharray="12 12"/><rect x="207" y="30" width="4" height="70" fill="#87917d"/><circle cx="209" cy="32" r="27" fill="#f5f1e9" stroke="#ed5726" stroke-width="7"/><text x="209" y="41" text-anchor="middle" font-size="26" font-weight="700" fill="#252e23">30</text><path d="M15 113h55M281 113h40" stroke="#87917d" stroke-width="2"/>',
-  crossing:
-    '<path d="M20 85H170V0H230V85H320V125H20Z" fill="#535d50"/><path d="M200 0V60" stroke="#faf5df" stroke-width="3" stroke-dasharray="10 10"/><path d="M178 68h44M178 75h44" stroke="#faf5df" stroke-width="2"/><circle cx="146" cy="35" r="9" fill="#ee5a2b"/><path d="M146 48v25m0-18-15 10m15-10 14 11m-14 7-12 22m12-22 10 22" stroke="#ee5a2b" stroke-width="6" stroke-linecap="round"/>',
-  rain: '<path d="M25 104H315" stroke="#87917d" stroke-width="2"/><g fill="#535d50"><rect x="40" y="67" width="70" height="28" rx="8"/><path d="M55 67L63 51H89L100 67Z"/><rect x="230" y="67" width="70" height="28" rx="8"/><path d="M245 67L253 51H279L290 67Z"/></g><g fill="#252e23"><circle cx="56" cy="94" r="8"/><circle cx="94" cy="94" r="8"/><circle cx="246" cy="94" r="8"/><circle cx="284" cy="94" r="8"/></g><path d="M125 76H215M132 69L125 76L132 83M208 69L215 76L208 83" stroke="#ed5726" stroke-width="3" fill="none"/><g stroke="#849c9a" stroke-width="2"><path d="M40 10l-5 12M80 20l-5 12M120 10l-5 12M160 20l-5 12M200 10l-5 12M240 20l-5 12M280 10l-5 12M310 20l-5 12"/></g>',
-};
-let stage = "mock";
-const tabs = [...document.querySelectorAll('[role="tab"]')];
-const panel = document.querySelector("#journey-panel");
-const answerButtons = [...document.querySelectorAll("[data-answer]")];
-const feedback = document.querySelector("#quiz-feedback");
-function selectStage(nextStage) {
-  stage = nextStage;
-  const question = questions[stage];
-  tabs.forEach((tab) => {
-    const selected = tab.dataset.stage === stage;
-    tab.setAttribute("aria-selected", String(selected));
-    tab.tabIndex = selected ? 0 : -1;
-  });
-  panel.setAttribute("aria-labelledby", `tab-${stage}`);
-  panel.querySelector(".panel-kicker").textContent = question.kicker;
-  panel.querySelector("#quiz-question").textContent = question.question;
-  panel.querySelector(".quiz-visual svg").innerHTML = visuals[question.symbol];
-  panel.querySelector("#quiz-source").href = question.source;
-  feedback.textContent = "";
-  answerButtons.forEach((button, index) => {
-    const letter = document.createElement("span");
-    letter.textContent = String.fromCharCode(65 + index);
-    button.replaceChildren(
-      letter,
-      document.createTextNode(question.answers[index]),
-    );
-    button.className = "";
-    button.removeAttribute("aria-pressed");
-  });
-}
-tabs.forEach((tab, index) => {
-  tab.addEventListener("click", () => selectStage(tab.dataset.stage));
-  tab.addEventListener("keydown", (event) => {
-    const forward = narrowScreen.matches ? "ArrowRight" : "ArrowDown";
-    const back = narrowScreen.matches ? "ArrowLeft" : "ArrowUp";
-    let nextIndex;
-    if (event.key === forward) nextIndex = (index + 1) % tabs.length;
-    if (event.key === back) nextIndex = (index + tabs.length - 1) % tabs.length;
-    if (event.key === "Home") nextIndex = 0;
-    if (event.key === "End") nextIndex = tabs.length - 1;
-    if (nextIndex === undefined) return;
-    event.preventDefault();
-    selectStage(tabs[nextIndex].dataset.stage);
-    tabs[nextIndex].focus();
-  });
-});
-answerButtons.forEach((button, index) =>
-  button.addEventListener("click", () => {
-    const question = questions[stage];
-    const correct = index === question.correct;
-    answerButtons.forEach((answer, i) => {
-      answer.className =
-        i === question.correct ? "correct" : i === index ? "incorrect" : "";
-      answer.setAttribute("aria-pressed", String(i === index));
-    });
-    feedback.textContent = `${correct ? "That’s right." : "Not quite — a useful one to remember."} ${question.explanation}`;
-  }),
-);
+matchMedia('(max-width: 800px)').addEventListener('change', closeMenu);
 
 const privacyDialog = document.querySelector("#privacy-dialog");
 document
@@ -195,3 +76,196 @@ function openLinkedPrivacy() {
 }
 window.addEventListener("hashchange", openLinkedPrivacy);
 openLinkedPrivacy();
+
+// Move only the product media, leaving reading and video controls stable.
+const motionQuery = matchMedia('(prefers-reduced-motion: reduce), (max-width: 800px)');
+const layers = [...document.querySelectorAll('[data-parallax]')];
+let motionFrame = 0;
+function updateDepth() {
+  motionFrame = 0;
+  layers.forEach(layer => {
+    if (motionQuery.matches) { layer.style.transform = ''; return; }
+    const section = layer.closest('section');
+    const distance = innerHeight / 2 - (section.getBoundingClientRect().top + section.offsetHeight / 2);
+    const offset = Math.max(-40, Math.min(40, distance * Number(layer.dataset.parallax)));
+    layer.style.transform = `translateY(${offset}px)`;
+  });
+}
+function queueDepth() { if (!motionFrame) motionFrame = requestAnimationFrame(updateDepth); }
+addEventListener('scroll', queueDepth, { passive:true });
+addEventListener('resize', queueDepth);
+motionQuery.addEventListener('change', queueDepth);
+queueDepth();
+
+const carousel = document.querySelector('.hero-stage');
+const demoVideo = carousel.querySelector('video');
+const pauseMotion = carousel.querySelector('.carousel-pause');
+const carouselStatus = carousel.querySelector('.carousel-status');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const heroCards = [carousel.querySelector('.hero-garage'), carousel.querySelector('.app-preview'), carousel.querySelector('.hero-feedback')];
+const heroLabels = ['Choose your drive', 'Dutch roundabout', 'Police car'];
+let heroIndex = 1;
+let userPaused = reducedMotion.matches;
+let carouselVisible = true;
+let carouselTimer;
+let pointerStart = null;
+let recordingIndex = 0;
+demoVideo.muted = true;
+function syncCarousel() {
+  clearInterval(carouselTimer);
+  const running = !userPaused && carouselVisible && !document.hidden;
+  pauseMotion.textContent = userPaused ? 'Play motion' : 'Pause motion';
+  pauseMotion.setAttribute('aria-label', userPaused ? 'Play carousel and video' : 'Pause carousel and video');
+  if (running) {
+    if (heroIndex === 1) demoVideo.play().catch(() => { demoVideo.controls = true; });
+    else demoVideo.pause();
+    carouselTimer = setInterval(() => slideHero(1), 6500);
+  } else demoVideo.pause();
+}
+function positionHero() {
+  heroCards.forEach((card, index) => {
+    const slot = (index - heroIndex + 3) % 3;
+    card.dataset.slot = slot === 0 ? 'center' : slot === 1 ? 'right' : 'left';
+  });
+  carouselStatus.textContent = `0${heroIndex + 1} / 03 · ${heroLabels[heroIndex]}`;
+}
+function slideHero(direction) {
+  heroIndex = (heroIndex + direction + 3) % 3;
+  if (heroIndex === 1) {
+    recordingIndex = 1 - recordingIndex;
+    const prefix = recordingIndex ? 'compact' : 'driving';
+    demoVideo.poster = '/media/' + (recordingIndex ? 'compact-poster.jpg' : 'driving-demo-poster.jpg');
+    demoVideo.querySelector('source').src = `/media/${prefix}-demo.mp4`;
+    demoVideo.load();
+  }
+  positionHero();
+  syncCarousel();
+}
+pauseMotion.addEventListener('click', () => { userPaused = !userPaused; syncCarousel(); });
+carousel.addEventListener('keydown', event => {
+  if (!['ArrowLeft','ArrowRight'].includes(event.key)) return;
+  event.preventDefault(); userPaused = true;
+  slideHero(event.key === 'ArrowRight' ? 1 : -1);
+});
+carousel.addEventListener('pointerdown', event => {
+  if (event.target.closest('button') || event.button !== 0) return;
+  pointerStart = {x:event.clientX, y:event.clientY};
+  carousel.setPointerCapture(event.pointerId);
+});
+carousel.addEventListener('pointerup', event => {
+  if (!pointerStart) return;
+  const dx = event.clientX - pointerStart.x, dy = event.clientY - pointerStart.y;
+  pointerStart = null;
+  if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy)) slideHero(dx < 0 ? 1 : -1);
+});
+carousel.addEventListener('pointercancel', () => { pointerStart = null; });
+carousel.addEventListener('dragstart', event => event.preventDefault());
+carousel.addEventListener('focusin', event => {
+  if (event.target === carousel && carousel.matches(':focus-visible')) { userPaused = true; syncCarousel(); }
+});
+reducedMotion.addEventListener('change', () => { userPaused = reducedMotion.matches; syncCarousel(); });
+document.addEventListener('visibilitychange', syncCarousel);
+new IntersectionObserver(entries => { carouselVisible = entries[0].isIntersecting; syncCarousel(); }, {threshold:.15}).observe(carousel);
+positionHero(); syncCarousel();
+
+const carsTrack = document.querySelector('.car-collection');
+const carsPause = document.querySelector('.cars-pause');
+let carsPaused = reducedMotion.matches;
+let carsVisible = false;
+let carsTimer;
+let carDrag;
+function syncCars() {
+  clearInterval(carsTimer);
+  carsPause.textContent = carsPaused ? 'Play motion' : 'Pause motion';
+  if (carsPaused || !carsVisible || document.hidden || carDrag) return;
+  carsTimer = setInterval(() => {
+    const step = carsTrack.querySelector('figure').offsetWidth + parseFloat(getComputedStyle(carsTrack).gap);
+    const atEnd = carsTrack.scrollLeft >= carsTrack.scrollWidth - carsTrack.clientWidth - 5;
+    carsTrack.scrollTo({left:atEnd ? 0 : carsTrack.scrollLeft + step, behavior:reducedMotion.matches ? 'instant' : 'smooth'});
+  }, 3500);
+}
+carsPause.addEventListener('click', () => { carsPaused = !carsPaused; syncCars(); });
+carsTrack.addEventListener('pointerdown', event => {
+  if (event.button !== 0) return;
+  carDrag = {x:event.clientX, scroll:carsTrack.scrollLeft};
+  carsTrack.classList.add('is-dragging');
+  syncCars();
+});
+carsTrack.addEventListener('pointermove', event => {
+  if (carDrag && Math.abs(event.clientX - carDrag.x) > 5) {
+    carsTrack.setPointerCapture(event.pointerId);
+    carsTrack.scrollLeft = carDrag.scroll - (event.clientX - carDrag.x);
+  }
+});
+function endCarDrag() { carDrag = null; carsTrack.classList.remove('is-dragging'); syncCars(); }
+carsTrack.addEventListener('pointerup', endCarDrag);
+carsTrack.addEventListener('pointercancel', endCarDrag);
+carsTrack.addEventListener('dragstart', event => event.preventDefault());
+carsTrack.addEventListener('keydown', event => {
+  if (!['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+  event.preventDefault();
+  carsPaused = true;
+  syncCars();
+  const step = carsTrack.querySelector('figure').offsetWidth + parseFloat(getComputedStyle(carsTrack).gap);
+  const left = event.key === 'Home' ? 0 : event.key === 'End' ? carsTrack.scrollWidth : carsTrack.scrollLeft + (event.key === 'ArrowRight' ? step : -step);
+  carsTrack.scrollTo({left, behavior:reducedMotion.matches ? 'instant' : 'smooth'});
+});
+carsTrack.addEventListener('mouseenter', () => clearInterval(carsTimer));
+carsTrack.addEventListener('mouseleave', syncCars);
+carsTrack.addEventListener('focusin', () => { carsPaused = true; syncCars(); });
+reducedMotion.addEventListener('change', () => { carsPaused = reducedMotion.matches; syncCars(); });
+document.addEventListener('visibilitychange', syncCars);
+new IntersectionObserver(entries => { carsVisible = entries[0].isIntersecting; syncCars(); }, {threshold:.2}).observe(carsTrack);
+syncCars();
+
+const carChoices = [...document.querySelectorAll('.car-choice')];
+const simulatorHost = document.querySelector('#garage-simulator');
+const simStatus = simulatorHost.querySelector('.sim-status');
+const simPause = document.querySelector('.garage-loop-pause');
+let simulator, simulatorLoading, simVisible=false, simPaused=reducedMotion.matches;
+let requestedCar='rx7', selectionToken=0;
+function syncSimulator() {
+  simPause.textContent = simPaused ? 'Play preview' : 'Pause preview';
+  simPause.setAttribute('aria-label', simPaused ? 'Play driving preview' : 'Pause driving preview');
+  simulator?.setRunning(simVisible && !simPaused && !document.hidden);
+}
+async function loadSimulator() {
+  if (simulatorLoading) return simulatorLoading;
+  simulatorLoading = import(/* @vite-ignore */ '/sim/engine.js').then(module=>module.createDrive(simulatorHost)).then(async drive=>{
+    simulator=drive;
+    await drive.select(requestedCar);
+    simStatus.hidden=true;simulatorHost.setAttribute('aria-busy','false');
+    syncSimulator();return drive;
+  }).catch(error=>{
+    simStatus.textContent=error.code==='SIM_WEBGL' ? '3D graphics are unavailable in this browser. Try opening this page in your regular browser.' : 'The driving preview could not load. Please try again.';
+    simPause.textContent='Retry preview';simPause.setAttribute('aria-label','Retry driving preview');
+    simulatorLoading=null;
+    simulatorHost.setAttribute('aria-busy','false');
+    console.warn('Simulator preview unavailable:',error.message);
+  });
+  return simulatorLoading;
+}
+carChoices.forEach(choice => choice.addEventListener('click', async () => {
+  const token=++selectionToken;
+  const name = choice.closest('figure').querySelector('figcaption').textContent;
+  const selectedImage = document.querySelector('#selected-car-image');
+  selectedImage.src = choice.querySelector('img').getAttribute('src');
+  selectedImage.alt = `${name} selected for preview`;
+  document.querySelector('#selected-car-name').textContent = name;
+  requestedCar = selectedImage.getAttribute('src').match(/car-(.+)\.png/)[1];
+  carChoices.forEach(button => button.setAttribute('aria-pressed', String(button === choice)));
+  carsPaused = true;syncCars();
+  await loadSimulator();
+  if (!simulator || token!==selectionToken) return;
+  simStatus.textContent=`Loading ${name}…`;simStatus.hidden=false;
+  try { await simulator.select(requestedCar); if(token===selectionToken)simStatus.hidden=true; }
+  catch { if(token===selectionToken)simStatus.textContent='Could not load this car. Please choose another.'; }
+}));
+simPause.addEventListener('click',()=>{
+  if(!simulator){simStatus.textContent='Loading driving preview…';simulatorHost.setAttribute('aria-busy','true');loadSimulator();return;}
+  simPaused=!simPaused;syncSimulator();
+});
+reducedMotion.addEventListener('change',()=>{simPaused=reducedMotion.matches;syncSimulator();});
+document.addEventListener('visibilitychange',syncSimulator);
+new IntersectionObserver(entries=>{simVisible=entries[0].isIntersecting;if(simVisible)loadSimulator();syncSimulator();},{rootMargin:'100px',threshold:.05}).observe(simulatorHost);
+syncSimulator();

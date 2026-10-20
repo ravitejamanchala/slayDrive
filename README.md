@@ -67,3 +67,9 @@ SLAYDRIVE_CHROMIUM_PATH=/usr/bin/chromium npm test
 ```
 
 Automated accessibility checks use axe-core against WCAG A/AA criteria; they complement manual review and do not certify full accessibility compliance. Layout checks cover widths from 320 to 1440 pixels. The test suite also applies the production Content Security Policy during a functional browser check.
+
+## Tool demo video (preview)
+
+The hero contains the only video player: a five-second portrait recording (1080×1920) from the tool’s mobile chase view, with no overhead footage. It shows an intentionally staged cyclist collision and holds on the tool’s actual “Collided with a cyclist” feedback for readability. Captions and the poster use the same mobile view. The video is silent, responsive and does not autoplay.
+
+Source: `ravitejamanchala/cambridge-learner-driv`, branch `recovery/stripe-subscriptions-2026-10-15`, commit `d28a646a9a11d5c8d19e2dfa969612da60b97665`. Captured locally with recording hooks, automated inputs, local demo lesson access and staged cyclist timing. No production accounts, billing or learner progress were touched. The source tool was not modified. The screenshot and poster come directly from the app. The separate demo section has been removed.

@@ -1,0 +1,3 @@
+Simulator modules and car assets copied from ravitejamanchala/cambridge-learner-driv, recovery/stripe-subscriptions-2026-10-15, commit d28a646a9a11d5c8d19e2dfa969612da60b97665. engine.js supplies a closed demonstration circuit and automatic steering; car physics, model loading, road building and city rendering use the original modules. Three.js r128 is vendored with its MIT license. No authentication or payment modules are loaded.
+
+RX-7 data-URI buffers/textures are extracted losslessly to adjacent same-origin files so the model loads under the site content security policy.
