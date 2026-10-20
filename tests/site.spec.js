@@ -164,11 +164,12 @@ test('hero carousel supports keyboard browsing and respects reduced motion', asy
 
 
 test('car collection scrolls one card with keyboard and supports dragging', async ({ page }) => {
+  await page.setViewportSize({width:390,height:844});
   await page.goto('/');
   const track = page.locator('.car-collection');
   await track.focus();
   await page.keyboard.press('ArrowRight');
-  await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBeGreaterThan(100);
+  await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBeGreaterThan(30);
   await page.keyboard.press('Home');
   await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBe(0);
   const box = await track.boundingBox();
@@ -176,7 +177,7 @@ test('car collection scrolls one card with keyboard and supports dragging', asyn
   await page.mouse.down();
   await page.mouse.move(box.x + 80, box.y + 100, {steps:8});
   await page.mouse.up();
-  await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBeGreaterThan(100);
+  await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBeGreaterThan(30);
 });
 
 

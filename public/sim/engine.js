@@ -48,10 +48,10 @@ export async function createDrive(container) {
   const target=new T.Vector3(),look=new T.Vector3();let first=true;
   function render(dt) {
     const fx=-Math.sin(player.th),fz=-Math.cos(player.th);
-    target.set(player.x-fx*7,3.65,player.z-fz*7);
+    target.set(player.x-fx*5.6,3.05,player.z-fz*5.6);
     const smoothing=first?1:1-Math.exp(-dt*7);
     camera.position.lerp(target,smoothing);
-    target.set(player.x+fx*4,-1.6,player.z+fz*4);look.lerp(target,smoothing);camera.lookAt(look);first=false;
+    target.set(player.x+fx*3.6,-1.15,player.z+fz*3.6);look.lerp(target,smoothing);camera.lookAt(look);first=false;
     world.updateChunks(player.x,player.z,1);world.updateSun(player.x,player.z);world.updateSignals(clock);
     renderer.render(scene,camera);
   }

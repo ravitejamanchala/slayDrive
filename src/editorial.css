@@ -256,3 +256,24 @@
  .garage-columns .garage-live { width:min(100%,340px); }
  .garage-columns #garage-simulator { flex:none; aspect-ratio:9/16; min-height:0; border-width:5px; border-radius:28px; }
 }
+/* Smaller car choices fit the desktop column; the mobile row still swipes. */
+.garage-left .car-collection { gap:8px; padding:8px 5px; }
+.marketing-home .garage-left .collection-car,.marketing-home .garage-left .collection-car:nth-child(2n) { flex:0 0 calc((100% - 56px)/8); min-width:44px; max-width:68px; padding:0 1px 8px; }
+.garage-left .car-choice { border-width:2px; box-shadow:0 3px 0 #6a99b3; }
+.garage-left .car-choice[aria-pressed="true"] { box-shadow:0 0 0 2px #fff,0 4px 0 #087f83; }
+.garage-left .collection-car figcaption { font-size:9px; line-height:1.4; margin-top:9px; min-height:26px; }
+.sim-demo-hud { position:absolute; inset:0; pointer-events:none; user-select:none; color:#fff6ea; }
+.sim-auto-label { position:absolute; top:18px; left:16px; padding:8px 12px; border-radius:18px; background:#203b52cc; font-size:9px; letter-spacing:1px; }
+.sim-view-icon { position:absolute; top:16px; right:16px; display:grid; place-items:center; width:36px; height:36px; border-radius:12px; background:#203b52bb; font-size:22px; }
+.sim-demo-controls { position:absolute; bottom:22px; left:16px; right:16px; display:flex; align-items:end; justify-content:space-between; gap:20px; }
+.sim-steering,.sim-pedals { display:flex; gap:9px; align-items:end; }
+.sim-demo-controls span { display:grid; place-items:center; width:51px; height:65px; background:#203b5299; border:1px solid #d4e6ee66; border-radius:17px; box-shadow:0 3px 0 #132e3d55; font-size:40px; font-weight:300; }
+.sim-pedals .sim-brake { height:65px; font-size:23px; }
+.sim-pedals .sim-accelerator { height:90px; font-size:32px; }
+@media(max-width:800px) {
+ .marketing-home .garage-left .collection-car,.marketing-home .garage-left .collection-car:nth-child(2n) { flex:0 0 64px; min-width:64px; }
+ .sim-demo-controls { left:10px; right:10px; gap:12px; bottom:18px; }
+ .sim-demo-controls span { width:44px; height:56px; border-radius:14px; }
+ .sim-pedals .sim-brake { height:56px; }
+ .sim-pedals .sim-accelerator { height:76px; }
+}
