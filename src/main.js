@@ -225,7 +225,24 @@ carChoices.forEach(choice => choice.addEventListener('click', () => {
   selectedImage.src = choice.querySelector('img').getAttribute('src');
   selectedImage.alt = `${name} selected for preview`;
   document.querySelector('#selected-car-name').textContent = name;
+  document.querySelector('#loop-car-image').setAttribute('href', selectedImage.getAttribute('src'));
+  document.querySelector('#loop-car-name').textContent = name;
   carChoices.forEach(button => button.setAttribute('aria-pressed', String(button === choice)));
   carsPaused = true;
   syncCars();
 }));
+
+const garageMap = document.querySelector('.garage-map');
+const mapPauseButton = document.querySelector('.garage-loop-pause');
+let mapPaused = reducedMotion.matches;
+let mapVisible = false;
+function syncMapLoop() {
+  garageMap.classList.toggle('is-running', !mapPaused && mapVisible && !document.hidden);
+  mapPauseButton.textContent = mapPaused ? 'Play preview' : 'Pause preview';
+  mapPauseButton.setAttribute('aria-label', mapPaused ? 'Play map animation' : 'Pause map animation');
+}
+mapPauseButton.addEventListener('click', () => { mapPaused = !mapPaused; syncMapLoop(); });
+reducedMotion.addEventListener('change', () => { mapPaused = reducedMotion.matches; syncMapLoop(); });
+document.addEventListener('visibilitychange', syncMapLoop);
+new IntersectionObserver(entries => { mapVisible = entries[0].isIntersecting; syncMapLoop(); }, {threshold:.3}).observe(garageMap);
+syncMapLoop();

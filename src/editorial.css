@@ -209,3 +209,22 @@
 .practice-options-grid p { color:#506875; line-height:1.8; margin-bottom:24px; }
 .practice-boundary { max-width:980px; color:#506875; font-size:12px; line-height:1.8; }
 @media(max-width:800px) { .practice-options-grid { grid-template-columns:1fr; gap:30px; } .practice-intro { font-size:15px; } }
+/* Compact circuit preview alongside the garage selection. */
+.brand-spark .racing-wheel { width:40px; height:34px; stroke:none; }
+.garage-loop { width:160px; margin:0; justify-self:end; text-align:center; }
+.garage-loop figcaption { font-size:9px; line-height:1.6; margin-top:10px; }
+.garage-loop-pause { background:none; border:0; border-bottom:1px solid currentColor; padding:6px 0; font-size:10px; margin-top:3px; }
+@media(max-width:800px) {
+ .garage-selection { grid-template-columns:minmax(0,1fr) 120px; gap:18px 8px; padding:0 0 20px; }
+ .garage-title { grid-column:1/-1; }
+ .garage-loop { width:120px; }
+ #selected-car-image { margin:0; width:100%; }
+ .garage-loop figcaption { font-size:8px; }
+ .brand-spark .racing-wheel { width:31px; height:28px; }
+}
+.garage-loop { width:190px; }
+.garage-map { display:block; width:100%; height:auto; border:3px solid #fff6ea; border-radius:19px; box-shadow:0 5px 0 #6a99b3; }
+.loop-car { offset-path:path('M110 80 L290 80 A30 30 0 1 1 320 110 L320 290 A30 30 0 1 1 290 320 L110 320 A30 30 0 1 1 80 290 L80 110 A30 30 0 1 1 110 80'); offset-rotate:auto -25deg; animation:garage-lap 26s linear infinite; animation-play-state:paused; filter:drop-shadow(0 3px 2px #203b5255); }
+.garage-map.is-running .loop-car { animation-play-state:running; }
+@keyframes garage-lap { to { offset-distance:100%; } }
+@media(max-width:800px) { .garage-selection { grid-template-columns:minmax(0,1fr) 140px; } .garage-loop { width:140px; } }

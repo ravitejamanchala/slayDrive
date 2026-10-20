@@ -1,4 +1,4 @@
-const wheel = '<svg class="icon-spark" viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="20" cy="20" r="16"/><circle cx="20" cy="20" r="5"/><path d="M5 16l10 3m10 0 10-3M18 25l-2 10m6-10 2 10M8 11q12-7 24 0"/></svg>';
+const wheel = '<svg class="icon-spark racing-wheel" viewBox="0 0 48 40" aria-hidden="true" fill="none"><path d="M12 9h24l5-5 5 5-2 22-6 5-6-10H16l-6 10-6-5L2 9l5-5z" fill="currentColor"/><rect x="17" y="10" width="14" height="8" rx="2" fill="#fff6ea"/><path d="M20 14h8" stroke="#087f83" stroke-width="2"/><circle cx="12" cy="18" r="2" fill="#38cbb9"/><circle cx="36" cy="18" r="2" fill="#ef4f97"/><circle cx="19" cy="22" r="1.5" fill="#fff6ea"/><circle cx="29" cy="22" r="1.5" fill="#fff6ea"/></svg>';
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 const pages = [
   {
