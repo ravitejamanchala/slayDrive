@@ -237,7 +237,9 @@ async function loadSimulator() {
     simStatus.hidden=true;simulatorHost.setAttribute('aria-busy','false');
     syncSimulator();return drive;
   }).catch(error=>{
-    simStatus.textContent='The 3D preview needs WebGL. You can still explore the cars below.';
+    simStatus.textContent=error.code==='SIM_WEBGL' ? '3D graphics are unavailable in this browser. Try opening this page in your regular browser.' : 'The driving preview could not load. Please try again.';
+    simPause.textContent='Retry preview';simPause.setAttribute('aria-label','Retry driving preview');
+    simulatorLoading=null;
     simulatorHost.setAttribute('aria-busy','false');
     console.warn('Simulator preview unavailable:',error.message);
   });
@@ -259,7 +261,10 @@ carChoices.forEach(choice => choice.addEventListener('click', async () => {
   try { await simulator.select(requestedCar); if(token===selectionToken)simStatus.hidden=true; }
   catch { if(token===selectionToken)simStatus.textContent='Could not load this car. Please choose another.'; }
 }));
-simPause.addEventListener('click',()=>{simPaused=!simPaused;syncSimulator();});
+simPause.addEventListener('click',()=>{
+  if(!simulator){simStatus.textContent='Loading driving preview…';simulatorHost.setAttribute('aria-busy','true');loadSimulator();return;}
+  simPaused=!simPaused;syncSimulator();
+});
 reducedMotion.addEventListener('change',()=>{simPaused=reducedMotion.matches;syncSimulator();});
 document.addEventListener('visibilitychange',syncSimulator);
 new IntersectionObserver(entries=>{simVisible=entries[0].isIntersecting;if(simVisible)loadSimulator();syncSimulator();},{rootMargin:'100px',threshold:.05}).observe(simulatorHost);

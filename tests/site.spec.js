@@ -139,6 +139,10 @@ test("production CSP permits page scripts, fonts and garage selection", async ({
   await page.goto("/");
   await page.getByRole('button', {name:'Preview Blue compact',exact:true}).click();
   await expect(page.locator('#selected-car-name')).toHaveText('Blue compact');
+  await expect(page.locator('#garage-simulator canvas')).toHaveAttribute('data-car', 'compact', {timeout:15000});
+  await expect(page.locator('.sim-status')).toBeHidden();
+  await page.getByRole('button', {name:'Preview Police car',exact:true}).click();
+  await expect(page.locator('#garage-simulator canvas')).toHaveAttribute('data-car', 'police', {timeout:15000});
   expect(errors).toEqual([]);
 });
 

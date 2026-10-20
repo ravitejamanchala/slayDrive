@@ -11,7 +11,9 @@ export async function createDrive(container) {
     import('./js/net.js'),import('./js/world.js'),import('./js/car.js'),import('./js/cars.js')
   ]);
   const T=window.THREE;
-  const renderer=new T.WebGLRenderer({antialias:true,alpha:false});
+  let renderer;
+  try { renderer=new T.WebGLRenderer({antialias:true,alpha:false}); }
+  catch { const error=new Error('WebGL is unavailable');error.code='SIM_WEBGL';throw error; }
   renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
   renderer.outputEncoding=T.sRGBEncoding;
   const scene=new T.Scene();
@@ -41,7 +43,7 @@ export async function createDrive(container) {
     const request=++token;
     if(!cache.has(id))cache.set(id,loadCarModel('/sim/'+spec.url,spec.supplied?{yaw:0,hide:null,maxWidth:1.8,wheel:m=>/Wheel/i.test(m.name)||/Wheel/i.test(m.parent?.name||'')}:{}).catch(error=>{cache.delete(id);throw error;}));
     const model=await cache.get(id);if(request!==token)return;
-    player.setModel(model);player.sync(clock);render(1);return spec.title;
+    player.setModel(model);player.sync(clock);render(1);renderer.domElement.dataset.car=id;return spec.title;
   }
   const target=new T.Vector3(),look=new T.Vector3();let first=true;
   function render(dt) {
@@ -65,7 +67,8 @@ export async function createDrive(container) {
   function setRunning(value){running=value;cancelAnimationFrame(frame);if(running){last=performance.now();frame=requestAnimationFrame(tick);}}
   function resize(){const w=container.clientWidth,h=container.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();render(1);}
   renderer.domElement.setAttribute('aria-label','Live simulator with the selected car in chase view');renderer.domElement.setAttribute('role','img');container.append(renderer.domElement);
-  new ResizeObserver(resize).observe(container);
-  await select('rx7');resize();
+  const sizeObserver=new ResizeObserver(resize);sizeObserver.observe(container);
+  try { await select('rx7');resize(); }
+  catch(error) { sizeObserver.disconnect();renderer.dispose();renderer.domElement.remove();throw error; }
   return {select,setRunning,getState:()=>({x:player.x,z:player.z,speed:player.v,car:player.mesh.uuid}),dispose:()=>{setRunning(false);renderer.dispose();}};
 }
