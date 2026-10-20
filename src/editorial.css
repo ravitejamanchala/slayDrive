@@ -277,3 +277,8 @@
  .sim-pedals .sim-brake { height:56px; }
  .sim-pedals .sim-accelerator { height:76px; }
 }
+/* Give the selected car more presence and extend the matching phone screen. */
+.garage-left #selected-car-image { max-width:600px; height:380px; margin:-4px auto 4px; }
+@media(max-width:800px) {
+ .garage-left #selected-car-image { max-width:380px; height:250px; }
+}
