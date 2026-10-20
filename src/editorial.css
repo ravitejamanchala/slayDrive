@@ -231,3 +231,28 @@
  .garage-live { max-width:260px; justify-self:center; }
  .brand-spark .racing-wheel { width:31px; height:28px; }
 }
+/* One selection column and one full-height mobile simulator. */
+.garage-columns { display:grid; grid-template-columns:minmax(0,1fr) minmax(300px,.8fr); gap:8%; align-items:stretch; margin-top:44px; }
+.garage-left { min-width:0; }
+.garage-left .collection-heading { display:block; margin:0 0 28px; }
+.garage-left .collection-heading h2 { font-size:clamp(44px,4.5vw,66px); }
+.garage-left .collection-heading p { margin-top:20px; max-width:500px; font-size:14px; }
+.garage-left .garage-title { text-align:left; }
+.garage-left .garage-title .eyebrow { justify-content:flex-start; }
+.garage-left .garage-title h3 { font-size:38px; margin:12px 0 0; }
+.garage-left #selected-car-image { display:block; width:100%; max-width:400px; height:210px; object-fit:contain; margin:-12px auto -8px; }
+.garage-left .garage-title p { font-size:12px; }
+.garage-left .car-collection { margin-top:12px; }
+.marketing-home .garage-left .collection-car,.marketing-home .garage-left .collection-car:nth-child(2n) { flex-basis:108px; }
+.garage-left .collection-car figcaption { font-size:12px; }
+.garage-left .collection-footer { margin-top:8px; font-size:11px; }
+.garage-columns .garage-live { display:flex; flex-direction:column; max-width:440px; justify-self:center; min-width:0; }
+.garage-columns #garage-simulator { flex:1; aspect-ratio:auto; min-height:600px; border-width:7px; border-radius:36px; box-shadow:0 25px 45px -25px #203b5266; }
+.garage-columns .garage-loop-pause { align-self:center; }
+@media(max-width:800px) {
+ .garage-columns { grid-template-columns:1fr; gap:30px; margin-top:30px; }
+ .garage-left .collection-heading h2 { font-size:44px; }
+ .garage-left #selected-car-image { height:190px; max-width:320px; }
+ .garage-columns .garage-live { width:min(100%,340px); }
+ .garage-columns #garage-simulator { flex:none; aspect-ratio:9/16; min-height:0; border-width:5px; border-radius:28px; }
+}
