@@ -9,32 +9,13 @@ const guides = [
   "/driving-puzzles/",
 ];
 
-test("practice demo teaches the answer, resets between topics, and supports keyboard navigation", async ({
-  page,
-}) => {
-  await page.goto("/");
-  await page.locator('[data-answer="0"]').click();
-  await expect(page.locator("#quiz-feedback")).toContainText("Not quite");
-  await expect(page.locator("#quiz-feedback")).toContainText("rule 125");
-  await page.locator('[data-answer="1"]').click();
-  await expect(page.locator("#quiz-feedback")).toContainText("That’s right");
-  await page.getByRole("tab", { name: /Highway Code/ }).click();
-  await expect(page.locator("#quiz-feedback")).toBeEmpty();
-  await page.locator('[data-answer="0"]').click();
-  await expect(page.locator("#quiz-feedback")).toContainText("rule H2");
-  await page.getByRole("tab", { name: /Highway Code/ }).focus();
-  await page.keyboard.press("ArrowDown");
-  await expect(page.getByRole("tab", { name: /Road puzzles/ })).toBeFocused();
-  await expect(page.getByRole("tab", { name: /Road puzzles/ })).toHaveAttribute(
-    "aria-selected",
-    "true",
-  );
-  await page.locator('[data-answer="1"]').click();
-  await expect(page.locator("#quiz-feedback")).toContainText("rule 227");
-  await expect(page.locator("#quiz-source")).toHaveAttribute(
-    "href",
-    /driving-in-adverse-weather/,
-  );
+test('garage selection updates the featured car', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', {name:'Preview Blue compact',exact:true}).click();
+  await expect(page.locator('#selected-car-name')).toHaveText('Blue compact');
+  await expect(page.locator('#selected-car-image')).toHaveAttribute('src', '/media/cars/car-compact.png');
+  await expect(page.getByRole('button', {name:'Preview Blue compact',exact:true})).toHaveAttribute('aria-pressed','true');
+  await expect(page.locator('#journey')).toHaveCount(0);
 });
 
 test("mobile navigation, FAQs and privacy dialog work", async ({ page }) => {
@@ -47,10 +28,10 @@ test("mobile navigation, FAQs and privacy dialog work", async ({ page }) => {
   ).toBeVisible();
   await page
     .getByRole("navigation", { name: "Mobile navigation" })
-    .getByRole("link", { name: /How it works/ })
+    .getByRole("link", { name: /The experience/ })
     .click();
   await expect(page.locator("#mobile-nav")).toBeHidden();
-  await expect(page).toHaveURL(/#journey$/);
+  await expect(page).toHaveURL(/#experience$/);
   await page
     .locator("summary")
     .filter({ hasText: "Are the mock tests really unlimited?" })
@@ -135,7 +116,7 @@ test("homepage and guide pass automated WCAG AA checks", async ({ page }) => {
   }
 });
 
-test("production CSP permits page scripts, fonts and quiz interaction", async ({
+test("production CSP permits page scripts, fonts and garage selection", async ({
   page,
 }) => {
   const csp = readFileSync("public/_headers", "utf8")
@@ -154,8 +135,8 @@ test("production CSP permits page scripts, fonts and quiz interaction", async ({
     });
   });
   await page.goto("/");
-  await page.locator('[data-answer="1"]').click();
-  await expect(page.locator("#quiz-feedback")).toContainText("That’s right");
+  await page.getByRole('button', {name:'Preview Blue compact',exact:true}).click();
+  await expect(page.locator('#selected-car-name')).toHaveText('Blue compact');
   expect(errors).toEqual([]);
 });
 

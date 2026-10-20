@@ -29,12 +29,11 @@
     <header class="header">
       <a class="wordmark" href="#" aria-label="SlayDrive home"
         >slaydrive<span class="brand-spark" aria-hidden="true"
-          ><svg class="icon-spark" viewBox="0 0 40 40" aria-hidden="true">
-            <path d="M20 3v34M3 20h34M8 8l24 24M8 32 32 8" /></svg></span
+          ><svg class="icon-spark" viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="20" cy="20" r="16"/><circle cx="20" cy="20" r="5"/><path d="M5 16l10 3m10 0 10-3M18 25l-2 10m6-10 2 10M8 11q12-7 24 0"/></svg></span
       ></a>
       <nav class="desktop-nav" aria-label="Main navigation">
-        <a href="#perspective">Why SlayDrive</a>
-        <a href="#journey">How it works</a>
+        <a href="#perspective">The garage</a>
+        <a href="#experience">The experience</a>
         <a href="#next">The membership <span class="tiny-dot"></span></a>
       </nav>
       <a class="header-cta" href="#start"
@@ -58,8 +57,8 @@
       aria-label="Mobile navigation"
       hidden
     >
-      <a href="#perspective">Why SlayDrive <span>01</span></a>
-      <a href="#journey">How it works <span>02</span></a>
+      <a href="#perspective">The garage <span>01</span></a>
+      <a href="#experience">The experience <span>02</span></a>
       <a href="#next">The membership <span>03</span></a>
       <a href="#start"
         >Membership
@@ -159,200 +158,17 @@
       >
         <div class="section-label"><span>01 / THE GARAGE</span><span>ACTUAL CARS FROM THE APP</span></div>
         <div class="collection-heading"><h2 id="perspective-title">Find your<br /><span class="serif">next drive.</span></h2><p>A little personality for every practice. Pick a favourite, change things up and make your next drive your own.</p></div>
-        <div class="car-collection" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Car collection. Swipe or use arrow keys to explore."><figure class="collection-car"><img src="/media/cars/car-rx7.png" alt="RX-7 from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>RX-7</figcaption></figure><figure class="collection-car"><img src="/media/cars/car-compact.png" alt="Blue compact from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>Blue compact</figcaption></figure><figure class="collection-car"><img src="/media/cars/car-hatchback.png" alt="City hatchback from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>City hatchback</figcaption></figure><figure class="collection-car"><img src="/media/cars/car-suv.png" alt="SUV from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>SUV</figcaption></figure><figure class="collection-car"><img src="/media/cars/car-sports.png" alt="Sports coupe from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>Sports coupe</figcaption></figure><figure class="collection-car"><img src="/media/cars/car-sports-2.png" alt="Sports coupe 2 from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>Sports coupe 2</figcaption></figure><figure class="collection-car"><img src="/media/cars/car-taxi.png" alt="Taxi from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>Taxi</figcaption></figure><figure class="collection-car"><img src="/media/cars/car-police.png" alt="Police car from the app’s car collection" loading="lazy" width="512" height="512" /><figcaption>Police car</figcaption></figure></div><div class="collection-footer"><span>Eight cars. Your choice.</span><button class="cars-pause" type="button">Pause motion</button></div>
+        <div class="garage-selection"><div class="garage-title"><span class="eyebrow">YOUR SELECTED RIDE</span><h3 id="selected-car-name">RX-7</h3><span class="garage-selected-label">READY FOR A PRACTICE?</span></div><img id="selected-car-image" src="/media/cars/car-rx7.png" width="512" height="512" alt="RX-7 selected for preview" /><div class="garage-selection-note"><span>YOUR GARAGE</span><p>Choose a car below.<br />Find your favourite.</p></div></div><div class="car-collection" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Car collection. Swipe or use arrow keys to explore."><figure class="collection-car"><button class="car-choice" type="button" aria-label="Preview RX-7" aria-pressed="true"><img src="/media/cars/car-rx7.png" alt="RX-7 from the app’s car collection" loading="lazy" width="512" height="512" /></button><figcaption>RX-7</figcaption></figure><figure class="collection-car"><button class="car-choice" type="button" aria-label="Preview Blue compact" aria-pressed="false"><img src="/media/cars/car-compact.png" alt="Blue compact from the app’s car collection" loading="lazy" width="512" height="512" /></button><figcaption>Blue compact</figcaption></figure><figure class="collection-car"><button class="car-choice" type="button" aria-label="Preview City hatchback" aria-pressed="false"><img src="/media/cars/car-hatchback.png" alt="City hatchback from the app’s car collection" loading="lazy" width="512" height="512" /></button><figcaption>City hatchback</figcaption></figure><figure class="collection-car"><button class="car-choice" type="button" aria-label="Preview SUV" aria-pressed="false"><img src="/media/cars/car-suv.png" alt="SUV from the app’s car collection" loading="lazy" width="512" height="512" /></button><figcaption>SUV</figcaption></figure><figure class="collection-car"><button class="car-choice" type="button" aria-label="Preview Sports coupe" aria-pressed="false"><img src="/media/cars/car-sports.png" alt="Sports coupe from the app’s car collection" loading="lazy" width="512" height="512" /></button><figcaption>Sports coupe</figcaption></figure><figure class="collection-car"><button class="car-choice" type="button" aria-label="Preview Sports coupe 2" aria-pressed="false"><img src="/media/cars/car-sports-2.png" alt="Sports coupe 2 from the app’s car collection" loading="lazy" width="512" height="512" /></button><figcaption>Sports coupe 2</figcaption></figure><figure class="collection-car"><button class="car-choice" type="button" aria-label="Preview Taxi" aria-pressed="false"><img src="/media/cars/car-taxi.png" alt="Taxi from the app’s car collection" loading="lazy" width="512" height="512" /></button><figcaption>Taxi</figcaption></figure><figure class="collection-car"><button class="car-choice" type="button" aria-label="Preview Police car" aria-pressed="false"><img src="/media/cars/car-police.png" alt="Police car from the app’s car collection" loading="lazy" width="512" height="512" /></button><figcaption>Police car</figcaption></figure></div><div class="collection-footer"><span>Eight cars. Your choice.</span><button class="cars-pause" type="button">Pause motion</button></div>
       </section>
-      <section
-        class="journey section-pad"
-        id="journey"
-        aria-labelledby="journey-title"
-      >
-        <div class="section-label reveal">
-          <span>02 / MADE FOR YOUR LEARNING CURVE</span
-          ><span>LESS SCROLLING. MORE DOING.</span>
-        </div>
-        <div class="section-heading reveal">
-          <h2 id="journey-title">
-            A little practice.<br />A lot of
-            <span class="serif">possibility.</span>
-          </h2>
-          <p>
-            Meet three ways to get your brain in gear.<br />Try a bite-sized
-            preview below.
-          </p>
-        </div>
-        <div class="journey-explorer reveal">
-          <div
-            class="journey-tabs"
-            role="tablist"
-            aria-label="Choose a practice preview"
-            aria-orientation="vertical"
-          >
-            <button
-              id="tab-mock"
-              role="tab"
-              aria-selected="true"
-              aria-controls="journey-panel"
-              data-stage="mock"
-            >
-              <span class="tab-number">01</span
-              ><span
-                >Mock tests<small
-                  >Repetition. Reflection. Progress.</small
-                ></span
-              ><span class="tab-arrow" aria-hidden="true"
-                ><svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5 19 19 5M5 5h14v14" /></svg
-              ></span>
-            </button>
-            <button
-              id="tab-code"
-              role="tab"
-              aria-selected="false"
-              tabindex="-1"
-              aria-controls="journey-panel"
-              data-stage="code"
-            >
-              <span class="tab-number">02</span
-              ><span
-                >Highway Code<small
-                  >Get to know the why behind the rules.</small
-                ></span
-              ><span class="tab-arrow" aria-hidden="true"
-                ><svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5 19 19 5M5 5h14v14" /></svg
-              ></span>
-            </button>
-            <button
-              id="tab-puzzle"
-              role="tab"
-              aria-selected="false"
-              tabindex="-1"
-              aria-controls="journey-panel"
-              data-stage="puzzle"
-            >
-              <span class="tab-number">03</span
-              ><span
-                >Road puzzles<small
-                  >A little challenge for your road sense.</small
-                ></span
-              ><span class="tab-arrow" aria-hidden="true"
-                ><svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5 19 19 5M5 5h14v14" /></svg
-              ></span>
-            </button>
-          </div>
-          <div
-            class="journey-panel"
-            id="journey-panel"
-            role="tabpanel"
-            tabindex="0"
-            aria-labelledby="tab-mock"
-          >
-            <div class="quiz-topline">
-              <span class="panel-kicker">A LITTLE TEST DRIVE</span
-              ><span class="demo-badge">SAMPLE QUESTION</span>
-            </div>
-            <div class="quiz-visual" aria-hidden="true">
-              <svg viewBox="0 0 340 125">
-                <path d="M75 125L140 0H200L265 125" fill="#535d50" />
-                <path
-                  d="M170 0V125"
-                  stroke="#faf5df"
-                  stroke-width="3"
-                  stroke-dasharray="12 12"
-                />
-                <rect x="207" y="30" width="4" height="70" fill="#87917d" />
-                <circle
-                  cx="209"
-                  cy="32"
-                  r="27"
-                  fill="#f5f1e9"
-                  stroke="#ed5726"
-                  stroke-width="7"
-                />
-                <text
-                  x="209"
-                  y="41"
-                  text-anchor="middle"
-                  font-size="26"
-                  font-weight="700"
-                  fill="#252e23"
-                >
-                  30
-                </text>
-                <path
-                  d="M15 113h55M281 113h40"
-                  stroke="#87917d"
-                  stroke-width="2"
-                />
-              </svg>
-            </div>
-            <h3 id="quiz-question">
-              The limit is 30 mph. Is it always safe to drive at 30?
-            </h3>
-            <div class="quiz-options" aria-label="Answer choices">
-              <button data-answer="0">
-                <span>A</span> Yes, if the road is clear</button
-              ><button data-answer="1">
-                <span>B</span> No, conditions may call for less
-              </button>
-            </div>
-            <p class="quiz-feedback" id="quiz-feedback" aria-live="polite"></p>
-            <div class="quiz-bottom">
-              <span>THINK IT THROUGH. THEN TAKE YOUR PICK.</span
-              ><a
-                href="https://www.gov.uk/guidance/the-highway-code/general-rules-techniques-and-advice-for-all-drivers-and-riders-103-to-158"
-                target="_blank"
-                rel="noopener noreferrer"
-                id="quiz-source"
-                >The Highway Code
-                <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5 19 19 5M5 5h14v14" /></svg
-                ><span class="sr-only"> (opens in a new tab)</span></a
-              >
-            </div>
-          </div>
-        </div>
-        <div class="feature-links">
-          <a href="/mock-driving-tests/"
-            >Explore mock driving tests
-            <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5 19 19 5M5 5h14v14" /></svg></a
-          ><a href="/highway-code/"
-            >Learn the Highway Code
-            <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5 19 19 5M5 5h14v14" /></svg></a
-          ><a href="/driving-puzzles/"
-            >Discover road puzzles
-            <svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5 19 19 5M5 5h14v14" /></svg
-          ></a>
-        </div>
-        <p class="journey-footnote">
-          An interactive taste of the idea, not the full simulator. SlayDrive
-          supports learning; it doesn’t replace driving lessons or official DVSA
-          materials.
-        </p>
-      </section>
-      <section class="cambridge section-pad" aria-labelledby="cambridge-title">
-        <figure class="desktop-showcase" data-parallax="-0.045">
-          <div class="desktop-showcase-bar"><span aria-hidden="true">● ● ●</span><span>SLAYDRIVE / DESKTOP</span></div>
-          <img src="/media/app-desktop.jpg" width="1920" height="1080" loading="lazy" alt="Real desktop driving view at the Dutch roundabout, showing the learner car, cyclists and collision feedback" />
-          <figcaption>Dutch roundabout · Actual desktop app screen</figcaption>
+      <section class="cambridge section-pad" id="experience" aria-labelledby="cambridge-title">
+        <div class="experience-heading"><span class="eyebrow">02 / OUT OF THE GARAGE. ONTO THE ROAD.</span><h2 id="cambridge-title">Small decisions.<br /><span class="serif">A bigger picture.</span></h2><p>Read the road, spot the cyclist and choose your moment. Practise the decisions that matter before your next driving lesson.</p></div>
+        <figure class="desktop-showcase" data-parallax="-0.025">
+          <div class="desktop-showcase-bar"><span aria-hidden="true">● ● ●</span><span>DUTCH ROUNDABOUT / DESKTOP VIEW</span></div>
+          <img src="/media/app-desktop.jpg" width="1920" height="1080" loading="lazy" alt="Desktop driving at the Dutch roundabout, with cyclists, a learner car and real collision feedback" />
+          <figcaption>Actual app capture · Staged collision to show feedback · Map data © OpenStreetMap contributors</figcaption>
         </figure>
-        <div class="cambridge-copy reveal">
-          <span class="eyebrow">YOUR PRACTICE. UP CLOSE.</span>
-          <h2 id="cambridge-title">Get behind<br />the <span class="serif">learning.</span></h2>
-          <p>Choose your car. Get into a lesson. Build your road awareness, one decision at a time.</p>
-          <p>Miss a cyclist at the Dutch roundabout and the app shows what went wrong. Pause, understand the feedback and take that awareness into your next practice.</p>
-          <p class="capture-note">Actual app screens. Collision staged to demonstrate feedback. Map data © OpenStreetMap contributors.</p>
-          <a class="text-link" href="/driving-simulator/"
-            >Explore the driving simulator.
-            <span aria-hidden="true"
-              ><svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 19 19 5M5 5h14v14" /></svg></span></a
-          ><span class="external-caption">A LITTLE PRACTICE. A CLEARER PERSPECTIVE.</span>
-        </div>
+        <div class="experience-details"><article><span>01</span><h3>Notice the details.</h3><p>Signs, crossings and other road users. Give yourself time to understand what’s ahead.</p></article><article><span>02</span><h3>See what happened.</h3><p>Clear feedback helps you recognise a missed cyclist or a decision to revisit.</p></article><article><span>03</span><h3>Have another go.</h3><p>Take what you’ve learned into your next practice. Build awareness at your own pace.</p></article></div>
+        <a class="button button-dark" href="/driving-simulator/">Explore the driving simulator <span aria-hidden="true"><svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></span></a>
       </section>
       <section class="next section-pad" id="next" aria-labelledby="next-title">
         <div class="section-label reveal">
@@ -521,8 +337,7 @@
       <div class="footer-top">
         <a class="wordmark" href="#" aria-label="SlayDrive home"
           >slaydrive<span class="brand-spark" aria-hidden="true"
-            ><svg class="icon-spark" viewBox="0 0 40 40" aria-hidden="true">
-              <path d="M20 3v34M3 20h34M8 8l24 24M8 32 32 8" /></svg></span
+            ><svg class="icon-spark" viewBox="0 0 40 40" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="20" cy="20" r="16"/><circle cx="20" cy="20" r="5"/><path d="M5 16l10 3m10 0 10-3M18 25l-2 10m6-10 2 10M8 11q12-7 24 0"/></svg></span
         ></a>
         <p>Less nerves. More ready.</p>
         <a class="back-top" href="#"
