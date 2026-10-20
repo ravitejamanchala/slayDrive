@@ -16,9 +16,6 @@ test('garage selection updates the featured car', async ({ page }) => {
   await page.getByRole('button', {name:'Preview Blue compact',exact:true}).click();
   await expect(page.locator('#selected-car-name')).toHaveText('Blue compact');
   await expect(page.locator('#selected-car-image')).toHaveAttribute('src', '/media/cars/car-compact.png');
-  await expect(page.locator('#loop-car-image')).toHaveAttribute('href', '/media/cars/car-compact.png');
-  await expect(page.locator('.garage-map')).not.toHaveClass(/is-running/);
-  await expect(page.locator('.loop-car')).toHaveCSS('animation-name', 'none');
   await expect(page.getByRole('button', {name:'Preview Blue compact',exact:true})).toHaveAttribute('aria-pressed','true');
   await expect(page.locator('#journey')).toHaveCount(0);
 });

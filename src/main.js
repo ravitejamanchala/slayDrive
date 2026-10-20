@@ -219,30 +219,48 @@ new IntersectionObserver(entries => { carsVisible = entries[0].isIntersecting; s
 syncCars();
 
 const carChoices = [...document.querySelectorAll('.car-choice')];
-carChoices.forEach(choice => choice.addEventListener('click', () => {
+const simulatorHost = document.querySelector('#garage-simulator');
+const simStatus = simulatorHost.querySelector('.sim-status');
+const simPause = document.querySelector('.garage-loop-pause');
+let simulator, simulatorLoading, simVisible=false, simPaused=reducedMotion.matches;
+let requestedCar='rx7', selectionToken=0;
+function syncSimulator() {
+  simPause.textContent = simPaused ? 'Play preview' : 'Pause preview';
+  simPause.setAttribute('aria-label', simPaused ? 'Play driving preview' : 'Pause driving preview');
+  simulator?.setRunning(simVisible && !simPaused && !document.hidden);
+}
+async function loadSimulator() {
+  if (simulatorLoading) return simulatorLoading;
+  simulatorLoading = import(/* @vite-ignore */ '/sim/engine.js').then(module=>module.createDrive(simulatorHost)).then(async drive=>{
+    simulator=drive;
+    await drive.select(requestedCar);
+    simStatus.hidden=true;simulatorHost.setAttribute('aria-busy','false');
+    syncSimulator();return drive;
+  }).catch(error=>{
+    simStatus.textContent='The 3D preview needs WebGL. You can still explore the cars below.';
+    simulatorHost.setAttribute('aria-busy','false');
+    console.warn('Simulator preview unavailable:',error.message);
+  });
+  return simulatorLoading;
+}
+carChoices.forEach(choice => choice.addEventListener('click', async () => {
+  const token=++selectionToken;
   const name = choice.closest('figure').querySelector('figcaption').textContent;
   const selectedImage = document.querySelector('#selected-car-image');
   selectedImage.src = choice.querySelector('img').getAttribute('src');
   selectedImage.alt = `${name} selected for preview`;
   document.querySelector('#selected-car-name').textContent = name;
-  document.querySelector('#loop-car-image').setAttribute('href', selectedImage.getAttribute('src'));
-  document.querySelector('#loop-car-name').textContent = name;
+  requestedCar = selectedImage.getAttribute('src').match(/car-(.+)\.png/)[1];
   carChoices.forEach(button => button.setAttribute('aria-pressed', String(button === choice)));
-  carsPaused = true;
-  syncCars();
+  carsPaused = true;syncCars();
+  await loadSimulator();
+  if (!simulator || token!==selectionToken) return;
+  simStatus.textContent=`Loading ${name}…`;simStatus.hidden=false;
+  try { await simulator.select(requestedCar); if(token===selectionToken)simStatus.hidden=true; }
+  catch { if(token===selectionToken)simStatus.textContent='Could not load this car. Please choose another.'; }
 }));
-
-const garageMap = document.querySelector('.garage-map');
-const mapPauseButton = document.querySelector('.garage-loop-pause');
-let mapPaused = reducedMotion.matches;
-let mapVisible = false;
-function syncMapLoop() {
-  garageMap.classList.toggle('is-running', !mapPaused && mapVisible && !document.hidden);
-  mapPauseButton.textContent = mapPaused ? 'Play preview' : 'Pause preview';
-  mapPauseButton.setAttribute('aria-label', mapPaused ? 'Play map animation' : 'Pause map animation');
-}
-mapPauseButton.addEventListener('click', () => { mapPaused = !mapPaused; syncMapLoop(); });
-reducedMotion.addEventListener('change', () => { mapPaused = reducedMotion.matches; syncMapLoop(); });
-document.addEventListener('visibilitychange', syncMapLoop);
-new IntersectionObserver(entries => { mapVisible = entries[0].isIntersecting; syncMapLoop(); }, {threshold:.3}).observe(garageMap);
-syncMapLoop();
+simPause.addEventListener('click',()=>{simPaused=!simPaused;syncSimulator();});
+reducedMotion.addEventListener('change',()=>{simPaused=reducedMotion.matches;syncSimulator();});
+document.addEventListener('visibilitychange',syncSimulator);
+new IntersectionObserver(entries=>{simVisible=entries[0].isIntersecting;if(simVisible)loadSimulator();syncSimulator();},{rootMargin:'100px',threshold:.05}).observe(simulatorHost);
+syncSimulator();
