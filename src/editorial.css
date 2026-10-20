@@ -200,3 +200,12 @@
  .marketing-home .collection-car,.marketing-home .collection-car:nth-child(2n) { flex-basis:120px; }
  .garage-title .eyebrow { justify-content:center; }
 }
+.practice-options { background:#fff; max-width:none; }
+.practice-options h2 { margin:25px 0; font-size:clamp(40px,5vw,68px); line-height:1.08; }
+.practice-intro { max-width:760px; font-size:17px; line-height:1.8; color:#506875; }
+.practice-options-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; margin:40px 0 28px; }
+.practice-options-grid article { border-top:1px solid #c4dedb; padding-top:24px; }
+.practice-options-grid h3 { font-size:28px; margin-bottom:16px; }
+.practice-options-grid p { color:#506875; line-height:1.8; margin-bottom:24px; }
+.practice-boundary { max-width:980px; color:#506875; font-size:12px; line-height:1.8; }
+@media(max-width:800px) { .practice-options-grid { grid-template-columns:1fr; gap:30px; } .practice-intro { font-size:15px; } }

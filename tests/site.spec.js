@@ -3,6 +3,8 @@ import AxeBuilder from "@axe-core/playwright";
 import { readFileSync } from "node:fs";
 
 const guides = [
+  "/practice-between-driving-lessons/",
+  "/driving-practice-without-a-car/",
   "/mock-driving-tests/",
   "/highway-code/",
   "/driving-simulator/",
@@ -89,7 +91,7 @@ test("all pages have unique SEO metadata, valid local links and no horizontal ov
       ).toBe(true);
     }
   }
-  expect(titles.size).toBe(5);
+  expect(titles.size).toBe(guides.length + 1);
   expect(errors).toEqual([]);
 });
 
@@ -171,4 +173,13 @@ test('car collection scrolls one card with keyboard and supports dragging', asyn
   await page.mouse.move(box.x + 80, box.y + 100, {steps:8});
   await page.mouse.up();
   await expect.poll(() => track.evaluate(el => el.scrollLeft)).toBeGreaterThan(100);
+});
+
+
+test('SEO guides are in the sitemap and subscriptions open the app', async ({ page, request }) => {
+  const sitemap = await (await request.get('/sitemap.xml')).text();
+  for (const path of ['/', ...guides]) expect(sitemap).toContain(`<loc>https://slaydrive.com${path}</loc>`);
+  await page.goto('/');
+  await expect(page.locator('.pricing-card .button')).toHaveAttribute('href', 'https://manchala.co.uk/cambridge-learner-driv/');
+  await expect(page.locator('.practice-options')).toContainText('cannot replace supervised on-road experience');
 });
