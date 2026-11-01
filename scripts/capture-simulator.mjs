@@ -1,5 +1,5 @@
 // Capture the real simulator UI with an isolated learner account, never a real user's data.
-// Usage: node --use-env-proxy scripts/capture-simulator.mjs /absolute/path/to/simulator-checkout [--routes-only]
+// Usage: node --use-env-proxy scripts/capture-simulator.mjs /absolute/path/to/simulator-checkout [--routes-only|--chase-only]
 import fs from 'node:fs';import path from 'node:path';import {createRequire} from 'node:module';import {pathToFileURL} from 'node:url';import {spawn,execFileSync} from 'node:child_process';
 const app=path.resolve(process.argv[2]||''),require=createRequire(path.join(app,'package.json'));
 const {chromium}=require('playwright'),three=path.dirname(require.resolve('three/package.json'));
@@ -30,17 +30,23 @@ try{
  await page.route('https://api.fixture.invalid/api/billing',r=>r.fulfill({json:{beta:{active:true,endsAt:'2026-12-01T00:00:00Z'},full:true,enabled:false,hasCustomer:false}}));
  await page.goto(base);await page.waitForFunction(()=>window.cambridgeDrive&&document.querySelector('#loadOv').hidden&&document.querySelector('#signInGate').hidden);await page.evaluate(()=>document.fonts.ready);
  const shot=async name=>{await page.screenshot({path:`${out}/${name}.jpg`,type:'jpeg',quality:88,animations:'disabled'});console.log('Captured',name);};
- if(!process.argv.includes('--routes-only')){
+ if(!process.argv.includes('--routes-only')&&!process.argv.includes('--chase-only')){
  await page.locator('#lobby [data-open="courseSheet"]').first().click();await shot('courses');await page.locator('#courseSheet [data-close]').click();
  await page.locator('#lobby [data-open="mockSheet"]').click();await shot('mock-tests');await page.locator('#mockSheet [data-close]').click();
  }
+ if(!process.argv.includes('--chase-only')){
  await page.locator('#myRoutesBtn').click();await page.locator('#personalSavedRoutes').getByRole('button',{name:'View',exact:true}).click();await page.locator('#routePlace').fill('Cambridge, UK');
  await page.waitForFunction(()=>{const map=document.querySelector('#personalRouteMap'),tiles=[...map.querySelectorAll('img.leaflet-tile')];return tiles.length>0&&tiles.every(img=>img.complete&&img.naturalWidth>0)&&document.querySelector('#routeReady').hidden===false;});
  await page.waitForTimeout(600);await shot('my-routes');await page.locator('#personalRoutesSheet .x').click();
+ }
  if(!process.argv.includes('--routes-only')){
- await page.evaluate(async()=>{const a=cambridgeDrive;await a.pick('mock','east-road',true);a.manual(true);a.setCam(1);for(let i=0;i<8;i++)a.frame(.1);});
+ await page.evaluate(async()=>{const a=cambridgeDrive;await a.pick('mock','east-road',true);a.manual(true);a.setCam(0);for(let i=0;i<8;i++)a.frame(.1);});
+ await shot('chase');
+ if(!process.argv.includes('--chase-only')){
+ await page.evaluate(()=>{cambridgeDrive.setCam(1);for(let i=0;i<8;i++)cambridgeDrive.frame(.1);});
  await page.waitForFunction(()=>cambridgeDrive.cockpit);await page.evaluate(()=>{for(let i=0;i<8;i++)cambridgeDrive.frame(.1);});await shot('cockpit');
  }
+ }
  const commit=execFileSync('git',['rev-parse','HEAD'],{cwd:app,encoding:'utf8'}).trim();
- fs.writeFileSync(`${out}/provenance.json`,JSON.stringify({simulatorRepository:'ravitejamanchala/cambridge-learner-driv',commit,viewport:{width:1600,height:1000},screenshots:['courses','mock-tests','my-routes','cockpit'],method:'Chromium screenshots of the actual simulator checkout. Authentication/account responses are isolated test fixtures; no real account data. Bundled East Road map. My routes uses a real OSRM route from routing.openstreetmap.de captured on 2026-11-01 and visible OpenStreetMap tiles, with attribution. No retouching or generated UI.'},null,2)+'\n');
+ fs.writeFileSync(`${out}/provenance.json`,JSON.stringify({simulatorRepository:'ravitejamanchala/cambridge-learner-driv',commit,viewport:{width:1600,height:1000},screenshots:['chase','cockpit','courses','mock-tests','my-routes'],method:'Chromium screenshots of the actual simulator checkout. Authentication/account responses are isolated test fixtures; no real account data. Bundled East Road map. My routes uses a real OSRM route from routing.openstreetmap.de captured on 2026-11-01 and visible OpenStreetMap tiles, with attribution. No retouching or generated UI.'},null,2)+'\n');
 }finally{await browser?.close();server.kill();}

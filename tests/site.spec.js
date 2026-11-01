@@ -150,13 +150,13 @@ test('desktop hero supports buttons and keyboard browsing without autoplay', asy
   await page.goto('/');
   const hero=page.getByRole('region',{name:/Desktop app previews/});
   await expect(hero.locator('video')).toHaveCount(0);
-  await expect(hero.locator('[data-hero-screen="cockpit"]')).toBeVisible();
+  await expect(hero.locator('[data-hero-screen="chase"]')).toBeVisible();
   await hero.focus();await page.keyboard.press('ArrowRight');
-  await expect(hero.locator('[data-hero-screen="courses"]')).toBeVisible();
+  await expect(hero.locator('[data-hero-screen="cockpit"]')).toBeVisible();
   await hero.getByRole('button',{name:'My routes',exact:true}).click();
   await expect(hero.locator('[data-hero-screen="my-routes"]')).toBeVisible();
   await expect.poll(()=>hero.locator('[data-hero-screen="my-routes"] img').evaluate(img=>img.complete&&img.naturalWidth===1600)).toBe(true);
-  await page.keyboard.press('Home');await expect(hero.locator('[data-hero-screen="cockpit"]')).toBeVisible();
+  await page.keyboard.press('Home');await expect(hero.locator('[data-hero-screen="chase"]')).toBeVisible();
   const sections=await page.locator('main > section').evaluateAll(els=>els.slice(0,3).map(el=>el.id||'hero'));
   expect(sections).toEqual(['hero','experience','perspective']);
   for(const width of [1440,390]){await page.setViewportSize({width,height:1000});await page.evaluate(()=>{scrollTo(0,0);document.activeElement?.blur();});await page.mouse.move(0,0);await page.screenshot({path:`test-results/hero-${width}.png`});}
@@ -201,21 +201,19 @@ test('free offer is explicit, has no beta wording and links to the current app',
  }
 });
 
-test('desktop gallery loads real captures, supports keyboard tabs and fits mobile',async({page})=>{
- await page.goto('/');await page.locator('#experience').scrollIntoViewIfNeeded();
- for(const [name,id] of [['Driver view','cockpit'],['Courses','courses'],['Mock tests','mock-tests'],['My routes','my-routes']]){
-  await page.getByRole('tab',{name,exact:true}).click();
-  const panel=page.locator('#screen-'+id);await expect(panel).toBeVisible();
+test('one preview gallery loads all five real captures and fits mobile',async({page})=>{
+ await page.goto('/');
+ const hero=page.getByRole('region',{name:/Desktop app previews/});
+ await expect(page.locator('.screen-gallery')).toHaveCount(0);
+ for(const [name,id] of [['Chase view','chase'],['Driver view','cockpit'],['Courses','courses'],['Mock tests','mock-tests'],['My routes','my-routes']]){
+  await hero.getByRole('button',{name,exact:true}).click();
+  const panel=hero.locator(`[data-hero-screen="${id}"]`);await expect(panel).toBeVisible();
   await expect.poll(()=>panel.locator('img').evaluate(img=>img.complete&&img.naturalWidth===1600)).toBe(true);
-  await expect(page.getByRole('tabpanel')).toHaveCount(1);
+  await expect(hero.locator('figure:visible')).toHaveCount(1);
  }
- await page.keyboard.press('Home');await expect(page.getByRole('tab',{name:'Driver view',exact:true})).toBeFocused();
- await page.keyboard.press('ArrowRight');await expect(page.getByRole('tab',{name:'Courses',exact:true})).toHaveAttribute('aria-selected','true');
- await page.keyboard.press('Home');
  for(const width of [1440,390]){
-  await page.setViewportSize({width,height:1000});await page.locator('.screen-gallery').scrollIntoViewIfNeeded();
+  await page.setViewportSize({width,height:1000});
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
-  await page.screenshot({path:`test-results/showcase-${width}.png`});
  }
 });
 
@@ -224,7 +222,7 @@ test('learner simulator search metadata matches visible features without invente
  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content',/courses, mock driving tests, free drive and routes you create/);
  await expect(page.locator('body')).not.toContainText(/UK.s (?:No\.?\s?1|number one)|guaranteed pass|Open the app and subscribe/i);
  const graph=JSON.parse(await page.locator('script[type="application/ld+json"]').textContent())['@graph'];
- const software=graph.find(n=>n['@type']==='SoftwareApplication');expect(software.screenshot).toHaveLength(4);expect(software.aggregateRating).toBeUndefined();
+ const software=graph.find(n=>n['@type']==='SoftwareApplication');expect(software.screenshot).toHaveLength(5);expect(software.aggregateRating).toBeUndefined();
  await page.goto('/driving-simulator/');await expect(page.getByRole('heading',{name:'How to choose the best learner driving simulator for you',exact:true})).toBeVisible();
  await expect(page.locator('article')).toContainText('Clearing browser storage');
 });
