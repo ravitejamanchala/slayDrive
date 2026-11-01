@@ -38,7 +38,7 @@ test("mobile navigation, FAQs and privacy dialog work", async ({ page }) => {
     .locator("summary")
     .filter({ hasText: "Are the mock tests really unlimited?" })
     .click();
-  await expect(page.locator("details[open]")).toContainText("£4.99/month");
+  await expect(page.locator("details[open]")).toContainText("free until 1 December 2026");
   await page.getByRole("button", { name: "Privacy", exact: true }).click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.keyboard.press("Escape");
@@ -185,6 +185,19 @@ test('SEO guides are in the sitemap and subscriptions open the app', async ({ pa
   const sitemap = await (await request.get('/sitemap.xml')).text();
   for (const path of ['/', ...guides]) expect(sitemap).toContain(`<loc>https://slaydrive.com${path}</loc>`);
   await page.goto('/');
-  await expect(page.locator('.pricing-card .button')).toHaveAttribute('href', 'https://manchala.co.uk/cambridge-learner-driv/');
+  await expect(page.locator('.pricing-card .button')).toHaveAttribute('href', 'https://app.slaydrive.com/');
   await expect(page.locator('.practice-options')).toContainText('cannot replace supervised on-road experience');
+});
+
+test('free offer is explicit, has no beta wording and links to the current app',async({page})=>{
+ for(const url of ['/',...guides]){
+  await page.goto(url);await expect(page.locator('body')).not.toContainText(/beta|experimental|£4\.99/i);
+  await expect(page.locator('body')).toContainText('No card required');
+  const launch=page.locator('a[href="https://app.slaydrive.com/"]');expect(await launch.count()).toBeGreaterThan(0);
+ }
+ await page.goto('/');const structured=JSON.parse(await page.locator('script[type="application/ld+json"]').textContent());const offer=structured['@graph'].find(n=>n['@type']==='SoftwareApplication').offers;
+ expect(offer.price).toBe('0');expect(offer.priceValidUntil).toBe('2026-11-30');
+ for(const width of [1440,390]){
+  await page.setViewportSize({width,height:900});await page.locator('#next').scrollIntoViewIfNeeded();await page.waitForTimeout(500);await page.screenshot({path:`test-results/free-offer-${width}.png`});
+ }
 });
