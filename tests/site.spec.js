@@ -210,7 +210,7 @@ test('one preview gallery loads all five real captures and fits mobile',async({p
  for(const [name,id] of [['Chase view','chase'],['Driver view','cockpit'],['Courses','courses'],['Mock tests','mock-tests'],['My routes','my-routes']]){
   await hero.getByRole('button',{name,exact:true}).click();
   const panel=hero.locator(`[data-hero-screen="${id}"]`);await expect(panel).toBeVisible();
-  await expect.poll(()=>panel.locator('img').evaluate(img=>img.complete&&img.naturalWidth===1600)).toBe(true);
+  await expect.poll(()=>panel.locator('img').evaluate(img=>img.complete&&img.naturalWidth===Number(img.getAttribute('width')))).toBe(true);
   await expect(hero.locator('figure:visible')).toHaveCount(1);
  }
  for(const width of [1440,390]){
@@ -247,6 +247,7 @@ test('hero plays only the selected loop, pauses and supports swipe without openi
  await hero.scrollIntoViewIfNeeded();await page.mouse.move(0,0);
  const chase=hero.locator('[data-hero-screen="chase"] video');
  await expect.poll(()=>chase.evaluate(v=>v.currentTime)).toBeGreaterThan(0.1);
+ expect(await chase.evaluate(v=>[v.videoWidth,v.videoHeight])).toEqual([1920,1200]);
  await expect(hero.locator('[data-hero-screen="cockpit"] video')).not.toHaveAttribute('src');
  // The slideshow advances without user input; then manual navigation stops rotation.
  await expect(hero.locator('[data-hero-screen="cockpit"]')).toBeVisible({timeout:12000});
@@ -256,6 +257,7 @@ test('hero plays only the selected loop, pauses and supports swipe without openi
  await hero.getByRole('button',{name:'Play hero motion',exact:true}).click();
  const cockpit=hero.locator('[data-hero-screen="cockpit"] video');
  await expect.poll(()=>cockpit.evaluate(v=>v.paused)).toBe(false);
+ await expect.poll(()=>cockpit.evaluate(v=>[v.videoWidth,v.videoHeight])).toEqual([1920,1200]);
  await page.locator('#perspective').scrollIntoViewIfNeeded();
  await expect.poll(()=>cockpit.evaluate(v=>v.paused)).toBe(true);
  await page.setViewportSize({width:390,height:844});
@@ -271,7 +273,7 @@ test('hero plays only the selected loop, pauses and supports swipe without openi
 test('data-saving browsers get static previews and lightweight access messaging',async({page})=>{
  await page.emulateMedia({reducedMotion:'no-preference'});
  await page.addInitScript(()=>Object.defineProperty(navigator,'connection',{value:{saveData:true},configurable:true}));
- const media=[];page.on('request',r=>{if(/-loop\.(mp4|gif)/.test(r.url()))media.push(r.url());});
+ const media=[];page.on('request',r=>{if(/-loop(?:-hd)?\.(mp4|gif)/.test(r.url()))media.push(r.url());});
  await page.goto('/');await page.locator('.desktop-hero').scrollIntoViewIfNeeded();
  await expect(page.getByRole('button',{name:'Play hero motion',exact:true})).toBeVisible();
  expect(media).toEqual([]);

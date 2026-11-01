@@ -1,21 +1,38 @@
 {
   "simulatorRepository": "ravitejamanchala/cambridge-learner-driv",
-  "commit": "f978a5c34bde0e046c4ba494c8cebebfe858f3ea",
+  "commit": "12f995fd66d59c70a6ec24f1f7111315a9e1a7f9",
   "seconds": 6,
-  "fps": 20,
+  "fps": 30,
   "viewport": {
-    "width": 1600,
-    "height": 1000
+    "width": 1920,
+    "height": 1200
   },
   "video": {
-    "width": 1280,
-    "height": 800
+    "width": 1920,
+    "height": 1200,
+    "codec": "H.264",
+    "crf": 18
+  },
+  "fonts": {
+    "stylesheet": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Geist:wght@400;500;600&family=Geist+Mono:wght@500;600&display=swap",
+    "verified": [
+      "500 16px Fredoka",
+      "600 16px Fredoka",
+      "700 16px Fredoka",
+      "400 16px Geist",
+      "500 16px Geist",
+      "600 16px Geist",
+      "500 16px \"Geist Mono\"",
+      "600 16px \"Geist Mono\""
+    ]
   },
   "files": [
-    "chase-loop.mp4",
-    "cockpit-loop.mp4",
+    "chase-loop-hd.mp4",
+    "cockpit-loop-hd.mp4",
     "chase-loop.gif",
-    "cockpit-loop.gif"
+    "cockpit-loop.gif",
+    "chase-hd.jpg",
+    "cockpit-hd.jpg"
   ],
-  "method": "Actual East Road simulator gameplay with its vehicle physics, scripted steering/throttle input and isolated account fixtures. Captured at fixed 20 Hz, encoded as muted MP4 loops and downloadable GIFs. No synthetic gameplay or image generation."
+  "method": "Actual East Road simulator gameplay with its vehicle physics, scripted steering/throttle input and isolated account fixtures. Captured at fixed 30 Hz, lossless PNG frames encoded at native 1920\u00d71200 as muted MP4 loops and downloadable GIFs. No synthetic gameplay or image generation."
 }
