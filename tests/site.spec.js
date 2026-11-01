@@ -146,10 +146,12 @@ test("production CSP permits page scripts, fonts and garage selection", async ({
   expect(errors).toEqual([]);
 });
 
-test('desktop hero supports buttons and keyboard browsing without autoplay', async ({ page }) => {
+test('reduced-motion hero stays static and supports buttons and keyboard browsing', async ({ page }) => {
   await page.goto('/');
   const hero=page.getByRole('region',{name:/Desktop app previews/});
-  await expect(hero.locator('video')).toHaveCount(0);
+  await expect(hero.locator('video')).toHaveCount(2);
+  await expect(hero.locator('video[src]')).toHaveCount(0);
+  await expect(hero.getByRole('button',{name:'Play hero motion',exact:true})).toBeVisible();
   await expect(hero.locator('[data-hero-screen="chase"]')).toBeVisible();
   await hero.focus();await page.keyboard.press('ArrowRight');
   await expect(hero.locator('[data-hero-screen="cockpit"]')).toBeVisible();
@@ -237,4 +239,42 @@ test('Terms of Use is linked, crawlable and clear about free access and user rig
  for(const width of [320,390,1440]){await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);}
  expect(await (await request.get('/sitemap.xml')).text()).toContain('<loc>https://slaydrive.com/terms-of-use/</loc>');
  const results=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();expect(results.violations).toEqual([]);
+});
+
+test('hero plays only the selected loop, pauses and supports swipe without opening an image',async({page})=>{
+ await page.emulateMedia({reducedMotion:'no-preference'});
+ await page.goto('/');const hero=page.locator('.desktop-hero');
+ await hero.scrollIntoViewIfNeeded();await page.mouse.move(0,0);
+ const chase=hero.locator('[data-hero-screen="chase"] video');
+ await expect.poll(()=>chase.evaluate(v=>v.currentTime)).toBeGreaterThan(0.1);
+ await expect(hero.locator('[data-hero-screen="cockpit"] video')).not.toHaveAttribute('src');
+ // The slideshow advances without user input; then manual navigation stops rotation.
+ await expect(hero.locator('[data-hero-screen="cockpit"]')).toBeVisible({timeout:12000});
+ expect(await chase.evaluate(v=>v.paused)).toBe(true);
+ await hero.getByRole('button',{name:'Pause hero motion',exact:true}).click();
+ expect(await hero.locator('video').evaluateAll(vs=>vs.every(v=>v.paused))).toBe(true);
+ await hero.getByRole('button',{name:'Play hero motion',exact:true}).click();
+ const cockpit=hero.locator('[data-hero-screen="cockpit"] video');
+ await expect.poll(()=>cockpit.evaluate(v=>v.paused)).toBe(false);
+ await page.locator('#perspective').scrollIntoViewIfNeeded();
+ await expect.poll(()=>cockpit.evaluate(v=>v.paused)).toBe(true);
+ await page.setViewportSize({width:390,height:844});
+ await hero.locator('[data-hero-screen="cockpit"] .hero-media').scrollIntoViewIfNeeded();
+ const box=await hero.locator('[data-hero-screen="cockpit"] .hero-media').boundingBox();
+ await page.mouse.move(box.x+box.width-30,box.y+60);await page.mouse.down();
+ await page.mouse.move(box.x+30,box.y+60,{steps:8});await page.mouse.up();
+ await expect(hero.locator('[data-hero-screen="courses"]')).toBeVisible();
+ expect(page.context().pages()).toHaveLength(1);
+ await expect(hero).toHaveAttribute('data-rotating','false');
+});
+
+test('data-saving browsers get static previews and lightweight access messaging',async({page})=>{
+ await page.emulateMedia({reducedMotion:'no-preference'});
+ await page.addInitScript(()=>Object.defineProperty(navigator,'connection',{value:{saveData:true},configurable:true}));
+ const media=[];page.on('request',r=>{if(/-loop\.(mp4|gif)/.test(r.url()))media.push(r.url());});
+ await page.goto('/');await page.locator('.desktop-hero').scrollIntoViewIfNeeded();
+ await expect(page.getByRole('button',{name:'Play hero motion',exact:true})).toBeVisible();
+ expect(media).toEqual([]);
+ await expect(page.locator('.hero-description')).toContainText('Lightweight driving practice');
+ await expect(page.getByRole('heading',{name:'Built for everyday browsers.'})).toBeVisible();
 });

@@ -2,7 +2,7 @@
 
 The marketing site now describes the current Course, Mock test, Free drive and My routes flow. Road challenges are presented as lessons within Course. New copy explains driver/chase/overhead views, compatible gamepad and touch controls, optional voice guidance, the first-use tour, account progress and feedback. Custom route storage is explicitly local to the browser; generated road detail and official-route limitations are explained beside the feature.
 
-The existing fonts, palette and car gallery remain. One desktop preview gallery leads the hero, with Chase view selected first, followed by Driver view, Courses, Mock tests and My routes. There is no duplicate screenshot gallery below it. The experience section explains the features, and the garage remains the third main section. Full-size links, alt text and keyboard controls are retained, without autoplay. Images have explicit dimensions, with lazy loading except for the initial chase image. No image-generation service or retouching was used.
+The existing fonts, palette and car gallery remain. One desktop preview gallery leads the hero, with Chase view selected first, followed by Driver view, Courses, Mock tests and My routes. There is no duplicate screenshot gallery below it. The experience section explains the features, and the garage remains the third main section. Full-size links, alt text and keyboard controls are retained. A controllable carousel advances every eight seconds; pointer hover or keyboard focus stops rotation. Images have explicit dimensions, with lazy loading except for the initial chase image. No image-generation service or retouching was used.
 
 ## Screenshot source
 
@@ -19,7 +19,7 @@ The existing fonts, palette and car gallery remain. One desktop preview gallery 
 
 ## Verification
 
-The production build and 12 Playwright tests cover navigation, internal links, unique metadata, structured data, responsive layouts from 320–1440 px, gallery image loading and keyboard operation, the free offer, existing car/garage interactions, hero keyboard controls, section order, and Terms of Use links/content, production CSP and automated WCAG AA checks. Desktop and mobile hero captures are in `docs/evidence/current-showcase/`.
+The production build and 14 Playwright tests cover navigation, internal links, unique metadata, structured data, responsive layouts from 320–1440 px, gallery image loading and keyboard operation, the free offer, existing car/garage interactions, hero keyboard controls, section order, and Terms of Use links/content, production CSP and automated WCAG AA checks. Desktop and mobile hero captures are in `docs/evidence/current-showcase/`.
 
 These are local/browser checks; search indexing and ranking are not verified or promised. The production deployment safeguard remains in place and confirms the live app grants the advertised free access before publishing.
 
@@ -51,4 +51,12 @@ Sources: [Google UK suggestions for driving simulator UK](https://suggestqueries
 
 ## Hero refinement
 
-The hero uses a compact two-column introduction above a broad desktop screenshot, with the heading “Learn the road. Own the drive.” A pink **Start driving free** action opens the app directly; the secondary link leads to the feature showcase. The former mint frame, mock browser bar and repeated introductory copy are removed. Mobile uses the same content in a single column. Screenshot buttons remain keyboard accessible and do not autoplay. The separate map-attribution line is removed from the hero and retained in the footer. Attribution embedded in actual map screenshots is preserved.
+The hero uses a compact two-column introduction above a broad desktop screenshot, with the heading “Learn the road. Own the drive.” A pink **Start driving free** action opens the app directly; the secondary link leads to the feature showcase. The former mint frame, mock browser bar and repeated introductory copy are removed. Mobile uses the same content in a single column. Screenshot buttons remain keyboard accessible; reduced-motion and data-saving preferences keep the hero static. The separate map-attribution line is removed from the hero and retained in the footer. Attribution embedded in actual map screenshots is preserved.
+
+## Lightweight browser access and animated hero
+
+The hero highlights lightweight, no-install browser practice on desktop and mobile. The feature section explains the existing low-power graphics setting without claiming universal device compatibility.
+
+Two six-second real gameplay loops lead the carousel: Chase view first, then Driver view. Inline H.264 clips are about 598 KB and 510 KB, with no audio. Larger GIFs are available only through explicit download links. Only the selected visible clip loads and plays; offscreen and background-tab video pauses. Pause/Play, previous/next, keyboard browsing and horizontal swipe are available. Reduced-motion and Save-Data users get still images until they explicitly choose Play. Failed playback retains the screenshot.
+
+`scripts/capture-hero-loops.mjs` records actual simulator physics with scripted steering and throttle; `loops-provenance.json` records its source commit. The local browser suite verifies real video playback, automatic advance, inactive/offscreen pause, manual pause, swipe without opening an image, reduced motion and no loop downloads under Save-Data. Browser providers are isolated test fixtures.

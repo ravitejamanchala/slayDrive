@@ -308,3 +308,20 @@
 }
 
 .footer-map-credit{padding:0 5% 24px;margin:0;font-size:11px;line-height:1.7;color:#506875}.footer-map-credit a{color:#08666a;text-decoration:underline;text-underline-offset:3px}
+
+/* Short gameplay loops and a controllable carousel, with static fallbacks. */
+.hero-stage-viewport{overflow:hidden;padding-bottom:4px}
+.hero-media{display:block;position:relative;aspect-ratio:8/5;touch-action:pan-y;user-select:none;border-radius:22px;overflow:hidden}
+.desktop-hero .hero-media img{height:100%;object-fit:cover}
+.hero-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;pointer-events:none;transition:opacity .25s}
+.hero-media video[data-ready=true]{opacity:1}
+.hero-entering{animation:hero-reveal .45s ease-out both}
+@keyframes hero-reveal{from{opacity:.25;transform:translateX(22px)}to{opacity:1;transform:translateX(0)}}
+.hero-playback{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin:-4px 0 16px;color:#203b52;font:600 13px "Geist Variable",sans-serif}
+.hero-playback button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:44px;min-height:44px;border:1px solid #bfd5d0;border-radius:999px;background:#fff;color:#203b52;cursor:pointer;font:600 13px "Fredoka Variable",sans-serif}
+.hero-playback button:hover{background:#e1f2ed;color:#08666a}.hero-playback button:focus-visible{outline:3px solid #bb1964;outline-offset:3px}
+.hero-playback [data-hero-pause]{padding:9px 14px;min-width:139px;margin-left:6px}
+.hero-playback svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.desktop-hero figcaption a{color:#08666a;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:600px){.hero-media{border-radius:14px}.hero-playback{justify-content:space-between;gap:6px}.hero-playback [data-hero-pause]{margin-left:auto}}
+@media(prefers-reduced-motion:reduce){.hero-entering{animation:none}.hero-media video{transition:none}}

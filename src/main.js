@@ -1,3 +1,4 @@
+import { initHeroCarousel } from "./hero-carousel.js";
 import "./style.css";
 import "./editorial.css";
 
@@ -98,23 +99,7 @@ motionQuery.addEventListener('change', queueDepth);
 queueDepth();
 
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-const hero=document.querySelector('.desktop-hero');
-const heroButtons=[...hero.querySelectorAll('[data-hero-pick]')];
-let heroIndex=0,heroPointer=null;
-function selectHero(index){
- heroIndex=(index+heroButtons.length)%heroButtons.length;
- const selected=heroButtons[heroIndex].dataset.heroPick;
- heroButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.heroPick===selected)));
- hero.querySelectorAll('[data-hero-screen]').forEach(screen=>{screen.hidden=screen.dataset.heroScreen!==selected;});
-}
-heroButtons.forEach((button,index)=>button.addEventListener('click',()=>selectHero(index)));
-hero.addEventListener('keydown',event=>{
- if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
- event.preventDefault();selectHero(event.key==='Home'?0:event.key==='End'?heroButtons.length-1:heroIndex+(event.key==='ArrowRight'?1:-1));
-});
-hero.addEventListener('pointerdown',event=>{if(event.target.closest('button,a')||event.button!==0)return;heroPointer={x:event.clientX,y:event.clientY};hero.setPointerCapture(event.pointerId);});
-hero.addEventListener('pointerup',event=>{if(!heroPointer)return;const dx=event.clientX-heroPointer.x,dy=event.clientY-heroPointer.y;heroPointer=null;if(Math.abs(dx)>35&&Math.abs(dx)>Math.abs(dy))selectHero(heroIndex+(dx<0?1:-1));});
-hero.addEventListener('pointercancel',()=>{heroPointer=null;});
+initHeroCarousel(document.querySelector('.desktop-hero'));
 
 const carsTrack = document.querySelector('.car-collection');
 const carsPause = document.querySelector('.cars-pause');

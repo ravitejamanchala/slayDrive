@@ -1,0 +1,21 @@
+{
+  "simulatorRepository": "ravitejamanchala/cambridge-learner-driv",
+  "commit": "f978a5c34bde0e046c4ba494c8cebebfe858f3ea",
+  "seconds": 6,
+  "fps": 20,
+  "viewport": {
+    "width": 1600,
+    "height": 1000
+  },
+  "video": {
+    "width": 1280,
+    "height": 800
+  },
+  "files": [
+    "chase-loop.mp4",
+    "cockpit-loop.mp4",
+    "chase-loop.gif",
+    "cockpit-loop.gif"
+  ],
+  "method": "Actual East Road simulator gameplay with its vehicle physics, scripted steering/throttle input and isolated account fixtures. Captured at fixed 20 Hz, encoded as muted MP4 loops and downloadable GIFs. No synthetic gameplay or image generation."
+}
