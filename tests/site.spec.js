@@ -159,7 +159,7 @@ test('desktop hero supports buttons and keyboard browsing without autoplay', asy
   await page.keyboard.press('Home');await expect(hero.locator('[data-hero-screen="cockpit"]')).toBeVisible();
   const sections=await page.locator('main > section').evaluateAll(els=>els.slice(0,3).map(el=>el.id||'hero'));
   expect(sections).toEqual(['hero','experience','perspective']);
-  for(const width of [1440,390]){await page.setViewportSize({width,height:1000});await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:`test-results/hero-${width}.png`});}
+  for(const width of [1440,390]){await page.setViewportSize({width,height:1000});await page.evaluate(()=>{scrollTo(0,0);document.activeElement?.blur();});await page.mouse.move(0,0);await page.screenshot({path:`test-results/hero-${width}.png`});}
 });
 
 test('car collection scrolls one card with keyboard and supports dragging', async ({ page }) => {

@@ -72,46 +72,23 @@
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <div class="eyebrow">
-            <span class="status-dot"></span> UK LEARNER DRIVING SIMULATOR
+          <div class="hero-heading">
+            <div class="eyebrow"><span class="status-dot"></span> UK LEARNER DRIVING SIMULATOR</div>
+            <h1 id="hero-title">Learn the road.<br /><span class="open-word">Own the drive.</span></h1>
           </div>
-          <h1 id="hero-title">
-            Less nerves.<br />More
-            <span class="open-word"
-              >ready<svg viewBox="0 0 370 24" aria-hidden="true">
-                <path
-                  d="M4 16 Q168 -6 363 12 M42 22 Q188 7 319 18"
-                /></svg></span
-            ><span class="orange-period">.</span>
-          </h1>
-          <p class="hero-description">
-            Learn a skill. Try a mock test. Drive a route you create.
-            Practise UK road decisions in your browser, with a driver’s-eye view,
-            guided courses and room to have another go. Free until 1 December 2026. No card required.
-          </p>
-          <a class="button button-dark" href="#experience"
-            >See inside the simulator
-            <span class="button-arrow" aria-hidden="true"
-              ><svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 19 19 5M5 5h14v14" /></svg></span
-          ></a>
-          <div class="hero-location">
-            <span class="status-dot"></span> Unlimited mock tests
-            <span class="location-divider">/</span> Free until 1 December.
+          <div class="hero-intro">
+            <p class="hero-description">Courses, mock tests and routes you create. Practise UK driving in your browser, at your own pace.</p>
+            <div class="hero-actions"><a class="button hero-play" href="https://app.slaydrive.com/">Start driving free <span aria-hidden="true"><svg class="icon-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14" /></svg></span></a><a class="hero-explore" href="#experience">Explore the simulator <span aria-hidden="true">↓</span></a></div>
+            <p class="hero-offer">Free until 1 December 2026 <span aria-hidden="true">·</span> No card required</p>
           </div>
         </div>
         <div class="desktop-hero" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Desktop app previews. Use the buttons or arrow keys to browse.">
-          <div class="desktop-hero-bar"><span aria-hidden="true">● ● ●</span><span>INSIDE SLAYDRIVE · DESKTOP</span></div>
+          <div class="hero-preview-heading"><span class="eyebrow">TAKE A LOOK INSIDE</span><span class="hero-preview-hint">Choose your view</span></div>
+          <div class="desktop-hero-controls" role="group" aria-label="Choose a desktop screenshot"><button type="button" data-hero-pick="cockpit" aria-pressed="true">Driver view</button><button type="button" data-hero-pick="courses" aria-pressed="false">Courses</button><button type="button" data-hero-pick="my-routes" aria-pressed="false">My routes</button></div>
           <figure data-hero-screen="cockpit"><a href="/media/current/cockpit.jpg" target="_blank" rel="noopener" aria-label="Open full-size driver view screenshot in a new tab"><img src="/media/current/cockpit.jpg" width="1600" height="1000" fetchpriority="high" decoding="async" alt="Driver’s-eye cockpit with mirrors and route navigation" /></a><figcaption>Driver view <span>Actual app capture</span></figcaption></figure>
           <figure data-hero-screen="courses" hidden><a href="/media/current/courses.jpg" target="_blank" rel="noopener" aria-label="Open full-size courses screenshot in a new tab"><img src="/media/current/courses.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="Desktop course menu with lessons, instructions and marking choices" /></a><figcaption>Courses <span>Actual app capture</span></figcaption></figure>
           <figure data-hero-screen="my-routes" hidden><a href="/media/current/my-routes.jpg" target="_blank" rel="noopener" aria-label="Open full-size my routes screenshot in a new tab"><img src="/media/current/my-routes.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="Cambridge route builder with start and finish pins and saved route controls" /></a><figcaption>My routes <span>Actual app capture</span></figcaption></figure>
-          <div class="desktop-hero-controls" role="group" aria-label="Choose a desktop screenshot"><button type="button" data-hero-pick="cockpit" aria-pressed="true">Driver view</button><button type="button" data-hero-pick="courses" aria-pressed="false">Courses</button><button type="button" data-hero-pick="my-routes" aria-pressed="false">My routes</button></div><p class="desktop-hero-note">Desktop views of the simulator. Also supports touch controls.<br />Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>.</p></div>
-        <div class="hero-foot">
-          <span>SMALL PRACTICE. BIG POSSIBILITIES.</span
-          ><a href="#perspective"
-            >Meet your new co-driver <span aria-hidden="true">↓</span></a
-          ><span>SCROLL TO EXPLORE</span>
-        </div>
+</div>
       </section>
       <div class="ticker" aria-hidden="true">
         <div>
@@ -377,6 +354,7 @@
         ><span>LEARN THE RULES. OPEN YOUR WORLD.</span
         ><a href="/terms-of-use/">Terms of Use</a><button class="privacy-button" id="privacy-open">Privacy</button>
       </div>
+      <p class="footer-map-credit">Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> · <a href="https://opendatacommons.org/licenses/odbl/">ODbL</a></p>
     </footer>
     <dialog id="privacy-dialog" aria-labelledby="privacy-title">
       <button class="dialog-close" aria-label="Close privacy information">

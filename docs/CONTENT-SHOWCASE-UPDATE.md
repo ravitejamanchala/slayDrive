@@ -48,3 +48,7 @@ Broad “best sim” searches can describe racing, flight or other simulators. T
 Sources: [Google UK suggestions for driving simulator UK](https://suggestqueries.google.com/complete/search?client=firefox&hl=en&gl=gb&q=driving+simulator+uk), [learner driving simulator](https://suggestqueries.google.com/complete/search?client=firefox&hl=en&gl=gb&q=learner+driving+simulator), [driving simulator online](https://suggestqueries.google.com/complete/search?client=firefox&hl=en&gl=gb&q=driving+simulator+online), [mock driving test simulator](https://suggestqueries.google.com/complete/search?client=firefox&hl=en&gl=gb&q=mock+driving+test+simulator).
 
 [Google Search documentation](https://developers.google.com/search/docs/crawling-indexing/special-tags) confirms that the meta-keyword tag has no effect on indexing or ranking. Keywords are used naturally in real page titles, descriptions, headings and matching content instead.
+
+## Hero refinement
+
+The hero uses a compact two-column introduction above a broad desktop screenshot, with the heading “Learn the road. Own the drive.” A pink **Start driving free** action opens the app directly; the secondary link leads to the feature showcase. The former mint frame, mock browser bar and repeated introductory copy are removed. Mobile uses the same content in a single column. Screenshot buttons remain keyboard accessible and do not autoplay. The separate map-attribution line is removed from the hero and retained in the footer and detailed gallery. Attribution embedded in actual map screenshots is preserved.
