@@ -6,7 +6,7 @@ The existing fonts, palette and car gallery remain. One desktop preview gallery 
 
 ## Screenshot source
 
-`public/media/current/provenance.json` records simulator commit `15e4bac` (full SHA in the provenance file), the simulator theme under review in [PR #30](https://github.com/ravitejamanchala/cambridge-learner-driv/pull/30). Captures show the pure-white-centre/light-grey-edge gradient, teal panels, pink actions and refined card/icon shadows. Publish them after the matching simulator PR is merged. Captures use the actual application with isolated authentication/account fixtures and its bundled East Road map. They contain no real user account information. `scripts/capture-simulator.mjs` reproduces the captures against an installed simulator checkout.
+`public/media/current/provenance.json` records simulator commit `f978a5c` (full SHA in the provenance file), the simulator theme under review in [PR #30](https://github.com/ravitejamanchala/cambridge-learner-driv/pull/30). Captures show the pure-white-centre/light-grey-edge gradient, white cards, teal panels, pink actions and refined card/icon shadows. Publish them after the matching simulator PR is merged. Captures use the actual application with isolated authentication/account fixtures and its bundled East Road map. They contain no real user account information. `scripts/capture-simulator.mjs` reproduces the captures against an installed simulator checkout.
 
 ## Search coverage
 
