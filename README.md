@@ -1,6 +1,6 @@
 # SlayDrive
 
-An editorial-style, responsive marketing website for the SlayDrive driving simulator and learning platform. £4.99/month membership messaging covers unlimited mock tests, different location maps, Highway Code lessons and road puzzles.
+An editorial-style, responsive marketing website for the SlayDrive driving simulator and learning platform. Free access until 1 December 2026 (no card required) covers unlimited mock tests, different location maps, Highway Code lessons and road puzzles.
 
 ## Develop
 
