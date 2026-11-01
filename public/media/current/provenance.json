@@ -1,0 +1,15 @@
+{
+  "simulatorRepository": "ravitejamanchala/cambridge-learner-driv",
+  "commit": "fbc2bc2465d43eefb260e341ec3afc86bbd08de3",
+  "viewport": {
+    "width": 1600,
+    "height": 1000
+  },
+  "screenshots": [
+    "courses",
+    "mock-tests",
+    "tour",
+    "cockpit"
+  ],
+  "method": "Chromium screenshots of the actual simulator checkout. Authentication/account responses are isolated test fixtures; no real account data. Bundled East Road map. No retouching or generated UI."
+}

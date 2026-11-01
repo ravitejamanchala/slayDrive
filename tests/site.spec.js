@@ -201,3 +201,31 @@ test('free offer is explicit, has no beta wording and links to the current app',
   await page.setViewportSize({width,height:900});await page.locator('#next').scrollIntoViewIfNeeded();await page.waitForTimeout(500);await page.screenshot({path:`test-results/free-offer-${width}.png`});
  }
 });
+
+test('desktop gallery loads real captures, supports keyboard tabs and fits mobile',async({page})=>{
+ await page.goto('/');await page.locator('#experience').scrollIntoViewIfNeeded();
+ for(const [name,id] of [['Driver view','cockpit'],['Courses','courses'],['Mock tests','mock-tests'],['Quick tour','tour']]){
+  await page.getByRole('tab',{name,exact:true}).click();
+  const panel=page.locator('#screen-'+id);await expect(panel).toBeVisible();
+  await expect.poll(()=>panel.locator('img').evaluate(img=>img.complete&&img.naturalWidth===1600)).toBe(true);
+  await expect(page.getByRole('tabpanel')).toHaveCount(1);
+ }
+ await page.keyboard.press('Home');await expect(page.getByRole('tab',{name:'Driver view',exact:true})).toBeFocused();
+ await page.keyboard.press('ArrowRight');await expect(page.getByRole('tab',{name:'Courses',exact:true})).toHaveAttribute('aria-selected','true');
+ await page.keyboard.press('Home');
+ for(const width of [1440,390]){
+  await page.setViewportSize({width,height:1000});await page.locator('.screen-gallery').scrollIntoViewIfNeeded();
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.screenshot({path:`test-results/showcase-${width}.png`});
+ }
+});
+
+test('learner simulator search metadata matches visible features without invented rankings',async({page})=>{
+ await page.goto('/');await expect(page).toHaveTitle('UK Learner Driving Simulator | Try Free | SlayDrive');
+ await expect(page.locator('meta[name="description"]')).toHaveAttribute('content',/courses, mock driving tests, free drive and routes you create/);
+ await expect(page.locator('body')).not.toContainText(/UK.s (?:No\.?\s?1|number one)|guaranteed pass|Open the app and subscribe/i);
+ const graph=JSON.parse(await page.locator('script[type="application/ld+json"]').textContent())['@graph'];
+ const software=graph.find(n=>n['@type']==='SoftwareApplication');expect(software.screenshot).toHaveLength(4);expect(software.aggregateRating).toBeUndefined();
+ await page.goto('/driving-simulator/');await expect(page.getByRole('heading',{name:'How to choose the best learner driving simulator for you',exact:true})).toBeVisible();
+ await expect(page.locator('article')).toContainText('Clearing browser storage');
+});

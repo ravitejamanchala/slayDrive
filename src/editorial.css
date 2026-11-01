@@ -179,6 +179,17 @@
 .experience-details article > span { color:#087f83; font-size:12px; }
 .experience-details h3 { font-size:25px; margin:15px 0 10px; }
 .experience-details p { color:#506875; font-size:14px; line-height:1.8; }
+.screen-gallery{width:100%;max-width:1160px;align-self:center}
+.screen-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.screen-tabs button{border:2px solid #087f83;border-radius:999px;background:#fff;color:#08666a;padding:12px 22px;min-height:46px;font:600 15px "Fredoka Variable",sans-serif;cursor:pointer}
+.screen-tabs button[aria-selected=true],.screen-tabs button:hover{background:#087f83;color:white}
+.screen-tabs button:focus-visible{outline:3px solid #bb1964;outline-offset:4px}
+.screen-gallery [hidden]{display:none!important}
+.screen-gallery figcaption{line-height:1.7;font-size:14px}
+.screen-gallery figcaption a{display:inline-block;margin-left:8px;color:#08666a;text-decoration:underline;text-underline-offset:3px}
+.capture-note{font-size:12px;line-height:1.7;color:#506875;margin-top:16px}
+.capture-note a{color:#08666a;text-decoration:underline}
+@media(max-width:600px){.screen-tabs{gap:8px}.screen-tabs button{flex:1 1 calc(50% - 8px);padding:10px;font-size:14px}.screen-gallery figcaption{font-size:13px}.experience-details{gap:28px}}
 .marketing-home .cambridge > .button { align-self:flex-start; }
 .marketing-home .next { width:100%; max-width:none; margin:0; border-radius:0; background:#e1f2ed; }
 @media(max-width:800px) {

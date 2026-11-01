@@ -4,6 +4,22 @@ import "./editorial.css";
 document.documentElement.classList.add("js");
 document.querySelector("#year").textContent = new Date().getFullYear();
 
+// Static, crawlable product screenshots; switch only when the visitor asks.
+const screenTabs=[...document.querySelectorAll('.screen-tabs [role="tab"]')];
+function selectScreen(tab){
+ for(const item of screenTabs){const selected=item===tab;item.setAttribute('aria-selected',String(selected));item.tabIndex=selected?0:-1;document.getElementById(item.getAttribute('aria-controls')).hidden=!selected;}
+}
+for(const tab of screenTabs){
+ tab.addEventListener('click',()=>selectScreen(tab));
+ tab.addEventListener('keydown',event=>{
+  const index=screenTabs.indexOf(tab);let next;
+  if(event.key==='ArrowRight')next=(index+1)%screenTabs.length;
+  if(event.key==='ArrowLeft')next=(index+screenTabs.length-1)%screenTabs.length;
+  if(event.key==='Home')next=0;if(event.key==='End')next=screenTabs.length-1;
+  if(next!==undefined){event.preventDefault();selectScreen(screenTabs[next]);screenTabs[next].focus();}
+ });
+}
+
 const menuButton = document.querySelector(".menu-toggle");
 const mobileNav = document.querySelector("#mobile-nav");
 function closeMenu() {
