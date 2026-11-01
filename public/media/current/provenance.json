@@ -1,0 +1,16 @@
+{
+  "simulatorRepository": "ravitejamanchala/cambridge-learner-driv",
+  "commit": "f978a5c34bde0e046c4ba494c8cebebfe858f3ea",
+  "viewport": {
+    "width": 1600,
+    "height": 1000
+  },
+  "screenshots": [
+    "chase",
+    "cockpit",
+    "courses",
+    "mock-tests",
+    "my-routes"
+  ],
+  "method": "Chromium screenshots of the actual simulator checkout. Authentication/account responses are isolated test fixtures; no real account data. Bundled East Road map. My routes uses a real OSRM route from routing.openstreetmap.de captured on 2026-11-01 and visible OpenStreetMap tiles, with attribution. No retouching or generated UI."
+}

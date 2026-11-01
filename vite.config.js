@@ -6,6 +6,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(import.meta.dirname, "index.html"),
+        terms: resolve(import.meta.dirname, "terms-of-use/index.html"),
         betweenLessons: resolve(import.meta.dirname, "practice-between-driving-lessons/index.html"),
         withoutCar: resolve(import.meta.dirname, "driving-practice-without-a-car/index.html"),
         mockTests: resolve(
