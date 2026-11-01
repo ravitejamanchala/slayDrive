@@ -113,76 +113,24 @@ addEventListener('resize', queueDepth);
 motionQuery.addEventListener('change', queueDepth);
 queueDepth();
 
-const carousel = document.querySelector('.hero-stage');
-const demoVideo = carousel.querySelector('video');
-const pauseMotion = carousel.querySelector('.carousel-pause');
-const carouselStatus = carousel.querySelector('.carousel-status');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-const heroCards = [carousel.querySelector('.hero-garage'), carousel.querySelector('.app-preview'), carousel.querySelector('.hero-feedback')];
-const heroLabels = ['Choose your drive', 'Dutch roundabout', 'Police car'];
-let heroIndex = 1;
-let userPaused = reducedMotion.matches;
-let carouselVisible = true;
-let carouselTimer;
-let pointerStart = null;
-let recordingIndex = 0;
-demoVideo.muted = true;
-function syncCarousel() {
-  clearInterval(carouselTimer);
-  const running = !userPaused && carouselVisible && !document.hidden;
-  pauseMotion.textContent = userPaused ? 'Play motion' : 'Pause motion';
-  pauseMotion.setAttribute('aria-label', userPaused ? 'Play carousel and video' : 'Pause carousel and video');
-  if (running) {
-    if (heroIndex === 1) demoVideo.play().catch(() => { demoVideo.controls = true; });
-    else demoVideo.pause();
-    carouselTimer = setInterval(() => slideHero(1), 6500);
-  } else demoVideo.pause();
+const hero=document.querySelector('.desktop-hero');
+const heroButtons=[...hero.querySelectorAll('[data-hero-pick]')];
+let heroIndex=0,heroPointer=null;
+function selectHero(index){
+ heroIndex=(index+heroButtons.length)%heroButtons.length;
+ const selected=heroButtons[heroIndex].dataset.heroPick;
+ heroButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.heroPick===selected)));
+ hero.querySelectorAll('[data-hero-screen]').forEach(screen=>{screen.hidden=screen.dataset.heroScreen!==selected;});
 }
-function positionHero() {
-  heroCards.forEach((card, index) => {
-    const slot = (index - heroIndex + 3) % 3;
-    card.dataset.slot = slot === 0 ? 'center' : slot === 1 ? 'right' : 'left';
-  });
-  carouselStatus.textContent = `0${heroIndex + 1} / 03 · ${heroLabels[heroIndex]}`;
-}
-function slideHero(direction) {
-  heroIndex = (heroIndex + direction + 3) % 3;
-  if (heroIndex === 1) {
-    recordingIndex = 1 - recordingIndex;
-    const prefix = recordingIndex ? 'compact' : 'driving';
-    demoVideo.poster = '/media/' + (recordingIndex ? 'compact-poster.jpg' : 'driving-demo-poster.jpg');
-    demoVideo.querySelector('source').src = `/media/${prefix}-demo.mp4`;
-    demoVideo.load();
-  }
-  positionHero();
-  syncCarousel();
-}
-pauseMotion.addEventListener('click', () => { userPaused = !userPaused; syncCarousel(); });
-carousel.addEventListener('keydown', event => {
-  if (!['ArrowLeft','ArrowRight'].includes(event.key)) return;
-  event.preventDefault(); userPaused = true;
-  slideHero(event.key === 'ArrowRight' ? 1 : -1);
+heroButtons.forEach((button,index)=>button.addEventListener('click',()=>selectHero(index)));
+hero.addEventListener('keydown',event=>{
+ if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+ event.preventDefault();selectHero(event.key==='Home'?0:event.key==='End'?heroButtons.length-1:heroIndex+(event.key==='ArrowRight'?1:-1));
 });
-carousel.addEventListener('pointerdown', event => {
-  if (event.target.closest('button') || event.button !== 0) return;
-  pointerStart = {x:event.clientX, y:event.clientY};
-  carousel.setPointerCapture(event.pointerId);
-});
-carousel.addEventListener('pointerup', event => {
-  if (!pointerStart) return;
-  const dx = event.clientX - pointerStart.x, dy = event.clientY - pointerStart.y;
-  pointerStart = null;
-  if (Math.abs(dx) > 35 && Math.abs(dx) > Math.abs(dy)) slideHero(dx < 0 ? 1 : -1);
-});
-carousel.addEventListener('pointercancel', () => { pointerStart = null; });
-carousel.addEventListener('dragstart', event => event.preventDefault());
-carousel.addEventListener('focusin', event => {
-  if (event.target === carousel && carousel.matches(':focus-visible')) { userPaused = true; syncCarousel(); }
-});
-reducedMotion.addEventListener('change', () => { userPaused = reducedMotion.matches; syncCarousel(); });
-document.addEventListener('visibilitychange', syncCarousel);
-new IntersectionObserver(entries => { carouselVisible = entries[0].isIntersecting; syncCarousel(); }, {threshold:.15}).observe(carousel);
-positionHero(); syncCarousel();
+hero.addEventListener('pointerdown',event=>{if(event.target.closest('button,a')||event.button!==0)return;heroPointer={x:event.clientX,y:event.clientY};hero.setPointerCapture(event.pointerId);});
+hero.addEventListener('pointerup',event=>{if(!heroPointer)return;const dx=event.clientX-heroPointer.x,dy=event.clientY-heroPointer.y;heroPointer=null;if(Math.abs(dx)>35&&Math.abs(dx)>Math.abs(dy))selectHero(heroIndex+(dx<0?1:-1));});
+hero.addEventListener('pointercancel',()=>{heroPointer=null;});
 
 const carsTrack = document.querySelector('.car-collection');
 const carsPause = document.querySelector('.cars-pause');

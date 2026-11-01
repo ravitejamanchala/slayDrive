@@ -8,8 +8,8 @@
   "screenshots": [
     "courses",
     "mock-tests",
-    "tour",
+    "my-routes",
     "cockpit"
   ],
-  "method": "Chromium screenshots of the actual simulator checkout. Authentication/account responses are isolated test fixtures; no real account data. Bundled East Road map. No retouching or generated UI."
+  "method": "Chromium screenshots of the actual simulator checkout. Authentication/account responses are isolated test fixtures; no real account data. Bundled East Road map. My routes uses a real OSRM route from routing.openstreetmap.de captured on 2026-11-01 and visible OpenStreetMap tiles, with attribution. No retouching or generated UI."
 }

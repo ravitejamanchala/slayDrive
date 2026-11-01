@@ -146,22 +146,21 @@ test("production CSP permits page scripts, fonts and garage selection", async ({
   expect(errors).toEqual([]);
 });
 
-test('hero carousel supports keyboard browsing and respects reduced motion', async ({ page }) => {
+test('desktop hero supports buttons and keyboard browsing without autoplay', async ({ page }) => {
   await page.goto('/');
-  const carousel = page.getByRole('region', { name: /App previews/ });
-  const video = carousel.locator('video');
-  await expect.poll(() => video.evaluate(v => v.paused)).toBe(true);
-  await carousel.focus();
-  await page.keyboard.press('ArrowRight');
-  await expect(carousel.locator('.hero-feedback')).toHaveAttribute('data-slot', 'center');
-  await expect(carousel.locator('.hero-feedback img')).toHaveAttribute('src', '/media/police-garage.png');
-  await expect.poll(() => video.evaluate(v => v.paused)).toBe(true);
-  await page.keyboard.press('ArrowLeft');
-  await expect(carousel.locator('.app-preview')).toHaveAttribute('data-slot', 'center');
-  await expect(video.locator('source')).toHaveAttribute('src', '/media/compact-demo.mp4');
-  await expect(page.locator('.collection-car')).toHaveCount(8);
+  const hero=page.getByRole('region',{name:/Desktop app previews/});
+  await expect(hero.locator('video')).toHaveCount(0);
+  await expect(hero.locator('[data-hero-screen="cockpit"]')).toBeVisible();
+  await hero.focus();await page.keyboard.press('ArrowRight');
+  await expect(hero.locator('[data-hero-screen="courses"]')).toBeVisible();
+  await hero.getByRole('button',{name:'My routes',exact:true}).click();
+  await expect(hero.locator('[data-hero-screen="my-routes"]')).toBeVisible();
+  await expect.poll(()=>hero.locator('[data-hero-screen="my-routes"] img').evaluate(img=>img.complete&&img.naturalWidth===1600)).toBe(true);
+  await page.keyboard.press('Home');await expect(hero.locator('[data-hero-screen="cockpit"]')).toBeVisible();
+  const sections=await page.locator('main > section').evaluateAll(els=>els.slice(0,3).map(el=>el.id||'hero'));
+  expect(sections).toEqual(['hero','experience','perspective']);
+  for(const width of [1440,390]){await page.setViewportSize({width,height:1000});await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:`test-results/hero-${width}.png`});}
 });
-
 
 test('car collection scrolls one card with keyboard and supports dragging', async ({ page }) => {
   await page.setViewportSize({width:390,height:844});
@@ -204,7 +203,7 @@ test('free offer is explicit, has no beta wording and links to the current app',
 
 test('desktop gallery loads real captures, supports keyboard tabs and fits mobile',async({page})=>{
  await page.goto('/');await page.locator('#experience').scrollIntoViewIfNeeded();
- for(const [name,id] of [['Driver view','cockpit'],['Courses','courses'],['Mock tests','mock-tests'],['Quick tour','tour']]){
+ for(const [name,id] of [['Driver view','cockpit'],['Courses','courses'],['Mock tests','mock-tests'],['My routes','my-routes']]){
   await page.getByRole('tab',{name,exact:true}).click();
   const panel=page.locator('#screen-'+id);await expect(panel).toBeVisible();
   await expect.poll(()=>panel.locator('img').evaluate(img=>img.complete&&img.naturalWidth===1600)).toBe(true);
@@ -221,11 +220,23 @@ test('desktop gallery loads real captures, supports keyboard tabs and fits mobil
 });
 
 test('learner simulator search metadata matches visible features without invented rankings',async({page})=>{
- await page.goto('/');await expect(page).toHaveTitle('UK Learner Driving Simulator | Try Free | SlayDrive');
+ await page.goto('/');await expect(page).toHaveTitle('Online UK Learner Driving Simulator | Try Free | SlayDrive');
  await expect(page.locator('meta[name="description"]')).toHaveAttribute('content',/courses, mock driving tests, free drive and routes you create/);
  await expect(page.locator('body')).not.toContainText(/UK.s (?:No\.?\s?1|number one)|guaranteed pass|Open the app and subscribe/i);
  const graph=JSON.parse(await page.locator('script[type="application/ld+json"]').textContent())['@graph'];
  const software=graph.find(n=>n['@type']==='SoftwareApplication');expect(software.screenshot).toHaveLength(4);expect(software.aggregateRating).toBeUndefined();
  await page.goto('/driving-simulator/');await expect(page.getByRole('heading',{name:'How to choose the best learner driving simulator for you',exact:true})).toBeVisible();
  await expect(page.locator('article')).toContainText('Clearing browser storage');
+});
+
+
+test('Terms of Use is linked, crawlable and clear about free access and user rights',async({page,request})=>{
+ await page.goto('/');await page.getByRole('link',{name:'Terms of Use',exact:true}).click();
+ await expect(page).toHaveURL(/\/terms-of-use\/$/);await expect(page.locator('h1')).toHaveText('Terms of Use');
+ await expect(page.locator('main')).toContainText('1 December 2026 at 00:00 UK time');
+ await expect(page.locator('main')).toContainText('does not automatically cancel');
+ await expect(page.locator('main')).toContainText('statutory consumer rights');
+ for(const width of [320,390,1440]){await page.setViewportSize({width,height:900});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);}
+ expect(await (await request.get('/sitemap.xml')).text()).toContain('<loc>https://slaydrive.com/terms-of-use/</loc>');
+ const results=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa']).analyze();expect(results.violations).toEqual([]);
 });
